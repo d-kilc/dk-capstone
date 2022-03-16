@@ -1,6 +1,11 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import store from '../store'
 export default function Signup({handleSignUp}) {
+
+    const navigate = useNavigate()
+    const auth = useSelector(state => state.auth)
     
     const [formData, setFormData] = useState({
         email: '',
@@ -8,9 +13,34 @@ export default function Signup({handleSignUp}) {
         password_confirmation: '',
     })
 
+    useEffect(() => {
+        if (auth.loggedIn) {
+            navigate('/')
+        }
+    }, [auth])
+
     function handleSetFormData(e) {
         setFormData({...formData, [e.target.name]: e.target.value})
     } 
+
+    function handleSignUp() {
+        fetch('/users', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json'},
+            body: JSON.stringify(formData)
+        })
+        .then(res => {
+            if (res.ok) {
+                res.json().then(data => {
+                    store.dispatch({
+                        type: 'SIGN_UP',
+                        payload: data
+                    })
+                })
+            }
+            // error handling
+        })
+    }
 
     return (
         <>
