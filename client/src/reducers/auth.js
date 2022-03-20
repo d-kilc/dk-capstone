@@ -1,4 +1,3 @@
-// export default (state = {user: null}, action) => {
 export default function authReducer(state = { user: null, loggedIn: false}, action) {
     const { type, payload } = action
     switch (type) {

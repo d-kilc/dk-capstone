@@ -6,7 +6,7 @@ class UsersController < ApplicationController
     end
 
     def create
-        user = User.create! email: params[:email], password: params[:password], password_confirmation: params[:password_confirmation]
+        user = User.create! email: params[:email], password: params[:password], password_confirmation: params[:password_confirmation], name: params[:name]
         session[:user_id] ||= user.id
         render json: user, status: 200
     end

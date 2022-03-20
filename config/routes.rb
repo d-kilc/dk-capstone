@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  resources :segments
+  resources :user_groups
+  resources :groups
+  resources :user_trips
+  resources :trips
   resources :users
 
   post '/login', to: 'sessions#create'
