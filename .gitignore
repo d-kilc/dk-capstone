@@ -32,3 +32,6 @@
 
 # environment-related
 .env
+
+# api stuffs
+/client/src/config

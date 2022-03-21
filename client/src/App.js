@@ -18,6 +18,8 @@ import store from './store'
 
 export default function App() {
 
+  const auth = useSelector(state => state.auth)
+
   useEffect(() => {
     fetch('/me')
     .then(res => {
@@ -50,7 +52,7 @@ export default function App() {
         <Route path='/new-trip' element={<NewTrip />}/>
         <Route path='/profile' element={<Profile />}/>
         <Route path='/trips/:trip_id' element={<Trip />}/>
-        <Route path='/groups/:group_id' element={<Group />}/>
+        <Route path='/groups/:group_id' element={<Group user={auth.user}/>}/>
         {/* <Route exact path='/' element={<Home user={user} />}/> */}
         <Route exact path='/' element={<Home />}/>
       </Routes>

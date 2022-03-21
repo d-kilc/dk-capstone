@@ -12,17 +12,18 @@ import Paper from '@mui/material/Paper';
 export default function DataTable({data, mode}) {
 
   const navigate = useNavigate()
+
   const rows = data.map(object => {
       if (object.hasOwnProperty('group')) {
         return (
-            <TableRow sx={{'&:hover': {backgroundColor: '#ececec'}}} onClick={() => navigate(`/groups/${object.group.id}`)}>
+            <TableRow sx={{'&:hover': {backgroundColor: '#ececec'}}} onClick={() => navigate(`/groups/${object.group.id}`, { state: object.group.id })}>
                 <TableCell align="left">{object.group.name}</TableCell>
                 <TableCell>trip members go here</TableCell>
             </TableRow>
         )
       } else {
         return (
-            <TableRow sx={{'&:hover': {backgroundColor: '#ececec'}}} onClick={() => navigate(`/trips/${object.trip.id}`)}>
+            <TableRow sx={{'&:hover': {backgroundColor: '#ececec'}}} onClick={() => navigate(`/trips/${object.trip.id}`, { state: object.trip.id })}>
                 <TableCell align="left">{object.trip.name}</TableCell>
                 <TableCell>group members go here</TableCell>
             </TableRow>
@@ -37,10 +38,10 @@ export default function DataTable({data, mode}) {
         <TableHead>
         {mode === 'GROUPS' ?
             (
-                <TableRow>
+            <TableRow>
                 <TableCell>Name</TableCell>
                 <TableCell align="left">Members</TableCell>
-                </TableRow>
+            </TableRow>
         ) : (
             <TableRow>
                 <TableCell>Name</TableCell>

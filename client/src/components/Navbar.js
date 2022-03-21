@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -24,13 +24,14 @@ const pages = ['Products', 'Pricing', 'Blog']
 export default function Navbar() {
 
     const auth = useSelector(state => state.auth)
+    const navigate = useNavigate()
 
     const [anchorElNav, setAnchorElNav] = React.useState(null)
     const [anchorElUser, setAnchorElUser] = React.useState(null)
-    const [mobileOpen, setMobileOpen] = React.useState(false)
+    const [drawerOpen, setDrawerOpen] = React.useState(false)
 
     function handleDrawerToggle() {
-        setMobileOpen(!mobileOpen)
+        setDrawerOpen(!drawerOpen)
     }
 
     function handleOpenUserMenu(event) {
@@ -53,6 +54,8 @@ export default function Navbar() {
                     store.dispatch({
                         type: 'LOG_OUT',
                     })
+                    handleCloseUserMenu()
+                    handleCloseNavMenu()
                 })
             }
         })
@@ -87,7 +90,7 @@ export default function Navbar() {
               }
               <Drawer
                 variant="temporary"
-                open={mobileOpen}
+                open={drawerOpen}
                 onClose={handleDrawerToggle}
                 ModalProps={{
                     keepMounted: true, // Better open performance on mobile.
@@ -97,11 +100,12 @@ export default function Navbar() {
                     '& .MuiDrawer-paper': { boxSizing: 'border-box', width: '300px' },
                 }}
                 >
-                {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
+                  <MenuItem onClick={() => {
+                      navigate('/')
+                      handleDrawerToggle()
+                    }}>
+                    <Typography textAlign="center">Dashboard</Typography>
                   </MenuItem>
-                ))}
               </Drawer>
             </Box>
             <Typography
@@ -113,15 +117,11 @@ export default function Navbar() {
               Tripi
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              {pages.map((page) => (
-                <Button
-                  key={page}
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
-                >
-                  {page}
-                </Button>
-              ))}
+                  <MenuItem onClick={() => {
+                      navigate('/')
+                    }}>
+                    <Typography textAlign="center">Dashboard</Typography>
+                  </MenuItem>
             </Box>
   
             <Box sx={{ flexGrow: 0 }}>
@@ -149,10 +149,10 @@ export default function Navbar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                  <Link to="/profile">
-                    {/* <MenuItem> */}
+                  <Link to="/profile" className="unstyled-link">
+                    <MenuItem>
                         <Typography textAlign="center">Profile</Typography>
-                    {/* </MenuItem> */}
+                    </MenuItem>
                   </Link>
                   <MenuItem onClick={handleLogOut}>
                     <Typography textAlign="center">Sign out</Typography>

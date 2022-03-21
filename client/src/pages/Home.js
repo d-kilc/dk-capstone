@@ -8,8 +8,6 @@ import store from '../store'
 export default function Home() {
     
     const auth = useSelector(state => state.auth)
-    console.log(auth)
-
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -26,11 +24,9 @@ export default function Home() {
                 <Grid item xs={12}>
                     <Typography mt={3} variant="h3">Welcome, {auth.user.name}</Typography>
                 </Grid>
-                <Grid item xs={12}>
-                    <Typography variant="h6">Plan a new trip</Typography>
-                    <Button>
-                        <Link to="/new-trip">New trip</Link>
-                    </Button>
+                <Grid item xs={12} textAlign="center">
+                    <Typography variant="h4">Plan a new trip</Typography>
+                    <Button variant="contained" onClick={() => navigate('/new-trip')}>Go</Button>
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <Typography variant="h6">My upcoming trips</Typography>

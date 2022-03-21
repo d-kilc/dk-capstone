@@ -2,3 +2,7 @@
   width: 90vw;
   margin: auto;
 }
+
+.unstyled-link {
+  text-decoration: none
+}

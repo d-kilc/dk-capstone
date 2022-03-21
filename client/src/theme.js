@@ -4,14 +4,9 @@ const theme = createTheme({
   typography: {
     fontFamily: ['Fredoka','sans-serif'].join(',')
   },
-  palette: {
-    primary: {
-        main: '#00CAB1',
-    },
-    secondary: {
-        main: '#FFC0CB'
-    }
-  }
+//   palette: {
+//     primary: '#00CAB1',
+//   }
 })
 
 export default theme
