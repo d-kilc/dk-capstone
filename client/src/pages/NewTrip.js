@@ -1,5 +1,5 @@
 import NewTripForm from '../components/NewTripForm'
-import MapContainer from '../components/MapContainer'
+import Map from '../components/Map'
 import { Grid, Typography } from '@mui/material'
 export default function NewTrip() {
     return (
@@ -9,7 +9,7 @@ export default function NewTrip() {
                     <NewTripForm />
                 </Grid>
                 <Grid item xs={12} md={6} sx={{ height:{xs: '50vh', md: '100vh'} }}>
-                    <MapContainer />
+                    <Map />
                 </Grid>
             </Grid>
         </div>

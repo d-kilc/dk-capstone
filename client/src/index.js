@@ -8,10 +8,6 @@ import { Provider } from 'react-redux'
 import reportWebVitals from './reportWebVitals'
 
 ReactDOM.render(
-// theme #00CAB1 (teal)
-
-  // <React.StrictMode>
-  // <React.StrictMode
   <Provider store={store}>
     <BrowserRouter>
       <App />

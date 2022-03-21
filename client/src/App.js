@@ -15,6 +15,8 @@ import { ThemeProvider } from '@material-ui/core/styles'
 import theme from './theme'
 import { useSelector } from 'react-redux'
 import store from './store'
+import accessToken from './config/config.js'
+import {Wrapper,Status} from '@googlemaps/react-wrapper'
 
 export default function App() {
 
@@ -41,22 +43,27 @@ export default function App() {
     })
   }, [])
 
+  function render(status) {
+    return <h1>{status}</h1>
+  }
+  console.log(window)
   return (
-    
-    <ThemeProvider theme={theme}>
-    
-      <Navbar />
-      <Routes>
-        <Route path='/login' element={<Login />}/>
-        <Route path='/signup' element={<Signup />}/>
-        <Route path='/new-trip' element={<NewTrip />}/>
-        <Route path='/profile' element={<Profile />}/>
-        <Route path='/trips/:trip_id' element={<Trip />}/>
-        <Route path='/groups/:group_id' element={<Group user={auth.user}/>}/>
-        {/* <Route exact path='/' element={<Home user={user} />}/> */}
-        <Route exact path='/' element={<Home />}/>
-      </Routes>
+    <Wrapper libraries={['places']} apiKey={accessToken} render={render}>
+      <ThemeProvider theme={theme}>
       
-    </ThemeProvider>
+        <Navbar />
+        <Routes>
+          <Route path='/login' element={<Login />}/>
+          <Route path='/signup' element={<Signup />}/>
+          <Route path='/new-trip' element={<NewTrip />}/>
+          <Route path='/profile' element={<Profile />}/>
+          <Route path='/trips/:trip_id' element={<Trip />}/>
+          <Route path='/groups/:group_id' element={<Group user={auth.user}/>}/>
+          {/* <Route exact path='/' element={<Home user={user} />}/> */}
+          <Route exact path='/' element={<Home />}/>
+        </Routes>
+        
+      </ThemeProvider>
+    </Wrapper>
   )
 }

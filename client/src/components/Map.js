@@ -3,7 +3,7 @@ import '../style/Map.css'
 export default function Map() {
 
     const ref = useRef(null)
-    const [map,setMap] = useState()
+    const [map, setMap] = useState()
     const [mapOptions,setMapOptions] = useState({
         center: { lat: 0, lng: 0},
         zoom: 2,

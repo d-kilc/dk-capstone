@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@googlemaps/js-api-loader": "^1.13.9",
     "moment": "^2.29.1",
     "react-big-calendar": "^0.39.4"
   }
