@@ -1,15 +1,18 @@
-export default function tripReducer(state = { segments: [{
-    from: '',
-    to: '',
-    when: '',
-    how: '',
-    tripSequence: 1,
+export default function tripReducer(state = {
+    name: '',
     modalVisible: false,
-    placeIds: []
-}], }, action) {
-    
+    segments: [{
+        from: '',
+        to: '',
+        when: '',
+        how: '',
+        tripSequence: 1,
+        modalVisible: false,
+        placeIds: []
+    }],
+}, action) {
+
     const { type, payload } = action
-    console.log(action.payload)
 
     const segmentsCopy = [...state.segments]
 
@@ -47,20 +50,6 @@ export default function tripReducer(state = { segments: [{
                 ...state,
                 segments: segmentsCopy
             }
-        case 'CREATE_SEGMENT_DIRECTIONS':
-            const directionsIdx = segmentsCopy.findIndex(segment => {
-                return segment.tripSequence === payload.segmentId
-            })
-
-            segmentsCopy[directionsIdx] = {
-                ...segmentsCopy[directionsIdx],
-                directions: payload.directionsRenderer
-            }
-
-            return {
-                ...state,
-                segments: segmentsCopy
-            }
         case 'TOGGLE_SEGMENT_MODAL':
            const toggleIdx = segmentsCopy.findIndex(segment => {
                 return segment.tripSequence === payload.segmentId
@@ -75,6 +64,10 @@ export default function tripReducer(state = { segments: [{
                 ...state,
                 segments: segmentsCopy
             }
+        case 'TOGGLE_TRIP_MODAL':
+            return { ...state, modalVisible: !state.modalVisible}
+        case 'SET_TRIP_NAME':
+            return { ...state, name: payload }
         default:
             return state
     }

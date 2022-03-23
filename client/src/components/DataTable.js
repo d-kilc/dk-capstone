@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Link, useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -10,6 +11,12 @@ import UserBadge from './UserBadge'
 import Paper from '@mui/material/Paper';
 
 export default function DataTable({data, mode}) {
+
+  const userTrips = useSelector(state => state.auth.user.user_trips)
+  console.log('userTrips:', userTrips)
+
+  const userGroups = useSelector(state => state.auth.user.user_groups)
+  console.log('userGroups:', userGroups)
 
   const navigate = useNavigate()
 

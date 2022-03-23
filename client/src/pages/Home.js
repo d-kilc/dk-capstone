@@ -8,6 +8,8 @@ import store from '../store'
 export default function Home() {
     
     const auth = useSelector(state => state.auth)
+    const userTrips = useSelector(state => state.auth.user_trips)
+    // console.log(auth)
     const navigate = useNavigate()
 
     useEffect(() => {

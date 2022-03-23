@@ -5,7 +5,7 @@ import moment from 'moment'
 const localizer = momentLocalizer(moment)
 
 export default function TripCalendar() {
-    const events = [{title: 'test', start: moment() }]
+    const events = [{title: 'test', start_date: moment(), end_date: moment() }]
 
     return (
         <Calendar

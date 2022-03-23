@@ -40,7 +40,7 @@ export default function Login({ handleLogIn }) {
                 })
             } else {
                 res.json().then(data => {
-                    console.log('login failed.')
+                    alert(data.errors)
                     store.dispatch({
                         type: 'LOGIN_FAILED',
                         payload: data

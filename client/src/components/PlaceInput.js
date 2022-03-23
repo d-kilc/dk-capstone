@@ -5,30 +5,26 @@ import { Grid, TextField, Autocomplete } from '@mui/material'
 export default function PlaceInput({ name, thisSegment, value, handleUpdateFormData }) {
     
     const [suggestions, setSuggestions] = useState([])
-    const service = new window.google.maps.places.AutocompleteService()
+    const autocompleteService = new window.google.maps.places.AutocompleteService()
 
     function handleUpdateInput(e) {
         handleUpdateFormData(e)
         //console.log('e.target.value: ', e.target.value)
         //TO DO: how (or if) to get cities only? currently getting all types of places
-        service.getQueryPredictions({ input: e.target.value, }, displaySuggestions)
+        autocompleteService.getQueryPredictions({ input: e.target.value, }, displaySuggestions)
     }
 
-    function displaySuggestions( predictions, status ) {
-        // dont care if theres no predictions. just keep typing and theyll come
-        // if (status !== window.google.maps.places.PlacesServiceStatus.OK || !predictions) {
-        //     alert(status)
-        //     return
-        // }
+    async function displaySuggestions( predictions, status ) {
 
+        if (predictions) { 
         const querySuggestions = predictions.map(prediction => {
             return {
                 label: prediction.description,
                 id: prediction.place_id,
             }
         })
-
         setSuggestions(querySuggestions)
+        }
     }
 
     return (

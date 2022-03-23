@@ -6,84 +6,86 @@ export default function Map() {
 
     const ref = useRef(null)
     const [map, setMap] = useState()
-    const [mapOptions,setMapOptions] = useState({
-        center: { lat: 0, lng: 0},
-        zoom: 2,
-    })
-    const [directionsRenderers, setDirectionsRenderers] = useState([])
-    // console.log(directionsRenderers)
+
+    // const [directionsRenderers, setDirectionsRenderers] = useState([])
+    // const [polylines, setPolylines] = useState([])
+    const [mappedRoutes, setMappedRoutes] = useState([])
 
     const newTrip = useSelector(state => state.newTrip)
     console.log('newTrip: ', newTrip)
 
     const directionsService = new window.google.maps.DirectionsService()
+    const placesService = new window.google.maps.places.PlacesService(map)
 
     useEffect(() => {
         if (ref.current && !map) {
-            setMap(new window.google.maps.Map(ref.current, mapOptions))
+            setMap(new window.google.maps.Map(ref.current, {
+                center: { lat: 0, lng: 0},
+                zoom: 2,
+            }))
         }
     },[ref,map])
-    
-    // useEffect(() => {
-
-    //     if (directionsRenderers.length > 0) {
-    //         directionsRenderers.forEach(dr => {
-    //             dr.setMap(null)
-    //         })
-    //     }
-
-    //     const newDrs = []
-
-    //     newTrip.segments.forEach(segment => {
-    //         console.log('segment!')
-    //         if (!segment.from.id || !segment.to.id) return
-    //         console.log('firing')
-    //         const dr = new window.google.maps.DirectionsRenderer()
-    //         dr.setMap(map)
-
-    //         //TO DO: Add logic for other modes of transport.
-    //         const request = {
-    //             origin: { placeId: segment.from.id },
-    //             destination: { placeId: segment.to.id },
-    //             travelMode: 'DRIVING'
-    //         }
-
-
-    //         directionsService.route(request, (result, status) => {
-    //             dr.setDirections(result)
-    //             newDrs.push(dr)
-    //             // setDirectionsRenderers([...directionsRenderers, dr])
-    //         })
-    //     })
-
-    //     setDirectionsRenderers(newDrs)
-
-    // }, [newTrip.segments.length])
 
     useEffect(() => {
-        directionsRenderers.forEach(dr => {
-            dr.setMap(null)
-        })
-        setDirectionsRenderers([])
-        const drs = newTrip.segments.map(segment => {
-            const dr = new window.google.maps.DirectionsRenderer()
-            
-            const request = {
-                origin: { placeId: segment.from.id },
-                destination: { placeId: segment.to.id },
-                travelMode: 'DRIVING'
+        // setPolylines()
+        // setDirectionsRenderers()
+
+        mappedRoutes.forEach(route => {
+            // first clear the map of all previous routes.
+            if (route.hasOwnProperty('geodesic')) {
+                // then its a polyline (flying/other). remove it
+                route.setPath()
             }
-    
-            directionsService.route(request, (result, status) => {
-                dr.setDirections(result)
-                dr.setMap(map)
-    
-    
-            })
-            return dr
+            // do this for both polylines and dr's.
+            route.setMap()
         })
-        console.log('drs: ',drs)
-        setDirectionsRenderers(drs)
+
+        const newMappedRoutes = []
+
+        newTrip.segments.forEach(segment => {
+            if (segment.how === '') return
+            if (segment.how !== 'drive') {
+                placesService.getDetails({ placeId: segment.from.id, fields: ['geometry'] },
+                    (result, status) => {
+                        const fromResult = result.geometry.location
+                        placesService.getDetails({ placeId: segment.to.id, fields: ['geometry'] },
+                            (result, status) => {
+                                const toResult = result.geometry.location
+                                const polyline = new window.google.maps.Polyline({
+                                    geodesic: true,
+                                    path: [fromResult, toResult],
+                                    strokeColor: '#7EB5FA',
+                                    strokeOpacity: 0.8,
+                                    strokeWeight: 6,
+                                })
+                                polyline.setMap(map)
+                                newMappedRoutes.push(polyline)
+
+                            }
+                        )
+                    }
+                )
+                return
+            } else {
+                // if driving create directions renderer and pass request to route function
+                const dr = new window.google.maps.DirectionsRenderer()
+            
+                const request = {
+                    origin: { placeId: segment.from.id },
+                    destination: { placeId: segment.to.id },
+                    travelMode: 'DRIVING'
+                }
+        
+                directionsService.route(request, (result, status) => {
+                    dr.setDirections(result)
+                    dr.setMap(map)
+                })
+
+                newMappedRoutes.push(dr)
+            }
+
+        })
+        setMappedRoutes(newMappedRoutes)
     }, [newTrip.segments])
 
     return (

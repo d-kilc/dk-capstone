@@ -18,7 +18,6 @@ import { useSelector } from 'react-redux'
 
 export default function Segment({ id, handleDeleteSegment }) {
     
-    // const newTrip = useSelector(state => state.newTrip)
     const thisSegment = useSelector(state => {
         const segmentIdx = state.newTrip.segments.findIndex(segment => {
             return segment.tripSequence === id
@@ -34,7 +33,7 @@ export default function Segment({ id, handleDeleteSegment }) {
     })
     console.log('formData: ', formData)
 
-    const [placeIdArr, setPlaceIdArr] = useState([])
+    const [segmentInfo, setSegmentInfo] = useState({from: '', to: '', how: ''})
     console.log('thisSegment: ', thisSegment)
 
     function handleToggleModal() {
@@ -47,24 +46,15 @@ export default function Segment({ id, handleDeleteSegment }) {
     }
 
     function handleUpdateFormData(e) {
-        // store.dispatch({
-        //     type: 'UPDATE_SEGMENT',
-        //     payload: {
-        //         segmentId: id,
-        //         key: e.target.name,
-        //         value: e.target.value,
-        //         placeId: null
-        //     }
-        // })
         setFormData({...formData, [e.target.name]: e.target.value})
     }
 
-    function handleSetPlaceIdArr() {
+    function handleUpdateSegmentInfo() {
         if (!formData.from.id || !formData.to.id || formData.how === '') {
             //TO DO: create custom error modal instead of using browser alerts
             return alert('Please populate all fields.')
         }
-        setPlaceIdArr([formData.from.id, formData.to.id])
+        setSegmentInfo({from: formData.from.id, to: formData.to.id, how: formData.how})
     }
 
     function handleSaveSegment() {
@@ -73,7 +63,8 @@ export default function Segment({ id, handleDeleteSegment }) {
             payload: {
                 segmentId: thisSegment.tripSequence,
                 newSegment: formData,
-                placeIds: placeIdArr, 
+                // placeIds: placeIdArr, 
+                placeIds: [segmentInfo.from, segmentInfo.to]
             }
         })
     }
@@ -135,12 +126,12 @@ export default function Segment({ id, handleDeleteSegment }) {
                         </Grid>
                         <Grid item xs={12}>
                             <ButtonGroup>
-                                <Button disabled={!formData.from.id || !formData.to.id || formData.how === ''} variant="contained" onClick={handleSetPlaceIdArr}>Preview Route</Button>
+                                <Button disabled={!formData.from.id || !formData.to.id || formData.how === ''} variant="contained" onClick={handleUpdateSegmentInfo}>Preview Route</Button>
                                 <Button disabled={!formData.from.id || !formData.to.id || !formData.when || !formData.how} variant="contained" onClick={handleSaveSegment} color="success">Save</Button>
                             </ButtonGroup>
                         </Grid>
                         <Grid item xs={12} sx={{ width: '100%', height: '50%' }}>
-                            <SegmentMap id={id} placeIdArr={placeIdArr}/>
+                            <SegmentMap id={id} segmentInfo={segmentInfo}/>
                         </Grid>
                     </Grid>
                 </Box>

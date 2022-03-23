@@ -63,7 +63,7 @@ export default function Navbar() {
   
     return (
       <AppBar position="static">
-        <Container maxWidth="xl">
+        <Container maxWidth="none">
           <Toolbar disableGutters>
             <Typography
               variant="h6"

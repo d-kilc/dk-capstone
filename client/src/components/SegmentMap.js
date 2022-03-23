@@ -1,66 +1,108 @@
 import { useRef, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import '../style/Map.css'
-export default function SegmentMap({ id, placeIdArr }) {
-
+export default function SegmentMap({ id, segmentInfo }) {
+    
     const ref = useRef(null)
     const [map, setMap] = useState()
-    const [mapOptions, setMapOptions] = useState({
-        center: { lat: 0, lng: 0},
-        zoom: 2,
-    })
-    // const [directionsRenderer, setDirectionsRenderer] = useState(new window.google.maps.DirectionsRenderer())
     const [directionsRenderer, setDirectionsRenderer] = useState()
-
-    const thisSegment = useSelector(state => {
-        const segmentIdx = state.newTrip.segments.findIndex(segment => {
-            return segment.tripSequence === id
-        })
-        return state.newTrip.segments[segmentIdx]
-    })
-
-    // const placesService = new window.google.maps.places.PlacesService(map)
-    const directionsService = new window.google.maps.DirectionsService()
-
+    const [latLngs, setLatLngs] = useState([])
+    const [polyline, setPolyline] = useState(new window.google.maps.Polyline({geodesic: true, strokeColor: '#7EB5FA', strokeOpacity: 0.9, strokeWeight: 6}))
+    
     useEffect(() => {
         if (ref.current && !map) {
-            setMap(new window.google.maps.Map(ref.current, mapOptions))
+            setMap(new window.google.maps.Map(ref.current, {
+                center: { lat: 0, lng: 0},
+                zoom: 2,
+            }))
         }
     }, [ref, map])
 
+    const directionsService = new window.google.maps.DirectionsService()
+    const placesService = new window.google.maps.places.PlacesService(map)
+    polyline.setMap(map)
+
     useEffect(() => {
+        // segmentInfo is updated on Preview Route
+        // this will render the path on the map based
+        // on transit chosen
 
-        if (placeIdArr.length === 2) {
+        if (segmentInfo.from !== '' && segmentInfo.to !==  '' && segmentInfo.how !== '') {
             // setDirectionsRenderer(dr => {
-
-            if (directionsRenderer) {
-                directionsRenderer.setMap(null)
-                setDirectionsRenderer()
+            if(segmentInfo.how !== 'drive') {
+                console.log('flying')
+                renderFlyRoute()
+                return
             }
-
-            const dr = new window.google.maps.DirectionsRenderer()
-            dr.setMap(map)
-
-            const request = {
-                origin: { placeId: placeIdArr[0] },
-                destination: { placeId: placeIdArr[1] },
-                travelMode: 'DRIVING'
-            }
-
-            directionsService.route(request, (result, status) => {
-                dr.setDirections(result)
-                setDirectionsRenderer(dr)
-            })
+            console.log('driving')
+            renderDriveRoute()
+            setLatLngs([])
         }
+    }, [segmentInfo])
 
-    }, [placeIdArr])
+    useEffect(() => {
+        polyline.setPath(latLngs)
+        zoomToObject(polyline)
+    }, [latLngs])
+
 
     function renderFlyRoute() {
-        console.log('flyign rotue')
+        if (directionsRenderer) {
+            directionsRenderer.setMap(null)
+            setDirectionsRenderer()
+        }
+
+        placesService.getDetails({ placeId: segmentInfo.from, fields: ['geometry'] },
+            (result, status) => {
+                // setLatLngs([...latLngs, result.geometry.location])
+                const fromResult = result.geometry.location
+
+                placesService.getDetails({ placeId: segmentInfo.to, fields: ['geometry'] },
+                    (result, status) => {
+                        const toResult = result.geometry.location
+                        setLatLngs([ fromResult, toResult ])
+                    }
+                )
+            }
+        )
     }
 
     function renderDriveRoute() {
-        console.log('driving route')
+        polyline.setPath()
+        polyline.setMap()
+
+        if (directionsRenderer) {
+            directionsRenderer.setMap(null)
+            setDirectionsRenderer()
+        }
+
+        const dr = new window.google.maps.DirectionsRenderer()
+        dr.setMap(map)
+
+        const request = {
+            origin: { placeId: segmentInfo.from },
+            destination: { placeId: segmentInfo.to },
+            travelMode: 'DRIVING'
+        }
+
+        directionsService.route(request, (result, status) => {
+            dr.setDirections(result)
+            setDirectionsRenderer(dr)
+        })
+       
+    }   
+    
+    function zoomToObject(obj){
+        const bounds = new window.google.maps.LatLngBounds()
+        const points = obj.getPath().getArray()
+        for (let n = 0; n < points.length ; n++){
+            bounds.extend(points[n])
+        }
+
+        if (map) {
+            map.fitBounds(bounds)
+        }
+        
     }
         
     return (
