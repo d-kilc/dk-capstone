@@ -40,4 +40,6 @@ UserGroup.create user_id: 1, group_id: 2, role: 'collaborator'
 UserGroup.create user_id: 4, group_id: 2, role: 'collaborator'
 UserGroup.create user_id: 8, group_id: 2, role: 'creator'
 
+Event.create name: 'test', description: 'a test description', start: '2022-04-01T00:00:00', end: '2022-04-01T01:00:00', user_id: 1, trip_id: 1
+
 puts 'Done.'
