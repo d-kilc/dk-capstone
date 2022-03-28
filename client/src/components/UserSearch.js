@@ -6,12 +6,15 @@ import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
 import Stack from '@mui/material/Stack'
 
-export default function UserSearch() {
+export default function UserSearch({mode}) {
 
     const users = useSelector(state => state.users)
     const auth = useSelector(state => state.auth)
     const trip = useSelector(state => state.trip)
+    const group = useSelector(state => state.group)
+
     console.log(users)
+    
 
     // this needs to be reimagined but fine for now
     useEffect(() => {
@@ -33,14 +36,21 @@ export default function UserSearch() {
         })
     }, [])
     
+
+    console.log(mode)
     return (
         <Autocomplete
             multiple
             options={users.allUsers}
             getOptionLabel={(option) => option.email}
             renderOption={(props, option) => {
-                const userTripIds = trip.currentTrip.user_trips.map(userTrip => userTrip.id)
-                if (option.id in userTripIds) return <></>
+                let ids
+                if (mode === 'TRIP') {
+                    ids = trip.currentTrip.user_trips.map(userTrip => userTrip.id)
+                } else {
+                    ids = group.currentGroup.user_groups.map(userGroup => userGroup.user.id)
+                }
+                if (option.id in ids) return <></>
                 if (option.id === auth.user.id) return <></>
                 else return <li {...props}>{option.email}</li>
             }}

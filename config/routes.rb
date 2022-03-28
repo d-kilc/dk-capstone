@@ -9,10 +9,10 @@ Rails.application.routes.draw do
 
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
-
   get '/me', to: 'users#show'
 
   get '/groups/:id', to: 'groups#show'
+  patch '/groups/:id', to: 'groups#update'
 
   post '/trips', to: 'trips#create'
   get '/trips/:id', to: 'trips#show'
@@ -26,11 +26,11 @@ Rails.application.routes.draw do
   post '/events', to: 'events#create'
   delete '/events/:id', to: 'events#destroy'
   patch '/events/:id', to: 'events#update'
-  # get '/trips/:id', to: 'trips#show' do
-  #   get '/events', to: 'events#show'
-  # end
 
   post '/user_trips', to: 'user_trips#create'
   delete '/user_trips/:id', to: 'user_trips#destroy'
+
+  post '/user_groups', to: 'user_groups#create'
+  delete '/user_groups/:id', to: 'user_groups#destroy'
 
 end

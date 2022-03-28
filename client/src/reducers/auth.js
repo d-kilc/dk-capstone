@@ -53,14 +53,38 @@ export default function authReducer(state = { user: null, loggedIn: false}, acti
                 }
             }
         case 'LEAVE_TRIP':
-            const idx = state.user.user_trips.findIndex(userTrip => userTrip.id === payload.id)
+            const tripIdx = state.user.user_trips.findIndex(userTrip => userTrip.id === payload.id)
             const newUserTrips = [...state.user.user_trips]
-            newUserTrips.splice(idx, 1)
+            newUserTrips.splice(tripIdx, 1)
             return {
                 ...state,
                 user: {
                     ...state.user,
                     user_trips: [...newUserTrips]
+                }
+            }
+        case 'LEAVE_GROUP':
+            const groupIdx = state.user.user_groups.findIndex(userGroup => userGroup.id === payload.id)
+            const newUserGroups = [...state.user.user_groups]
+            newUserGroups.splice(groupIdx, 1)
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    user_groups: [...newUserGroups]
+                }
+            }
+        case 'UPDATE_GROUPS':
+            const deleteGroupIdx = state.user.user_groups.findIndex(userGroup => {
+                return userGroup.group.id === payload.id
+            })
+            const groupCopy = [...state.user.user_groups]
+            groupCopy[deleteGroupIdx].group.name = payload.name
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    user_groups: [ ...groupCopy ]
                 }
             }
         default:

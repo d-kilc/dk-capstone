@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import { Typography, Grid, Card, Button } from '@mui/material'
+import { Typography, Grid, Link, Modal, Box } from '@mui/material'
 import store from '../store'
-import { useSelector, shallowEqual } from 'react-redux'
-
+import { useSelector } from 'react-redux'
+import InviteFriends from '../components/InviteFriends'
+import EditGroup from '../components/EditGroup'
+import LeaveGroup from '../components/LeaveGroup'
 import GroupUserTable from '../components/GroupUserTable'
 
 export default function Group() {
@@ -19,6 +21,7 @@ export default function Group() {
 
     // TO DO: figure out how to show group admin view
     const [isGroupCreator, setIsGroupCreator] = useState(false)
+    const [modalVisible, setModalVisible] = useState({visible: false, action: ''})
 
     // function isCreator() {
     //     if (group.currentGroup) {
@@ -74,15 +77,19 @@ export default function Group() {
                         <Typography mt={3} variant="h3">{group.currentGroup.name}</Typography>
                         <Grid container alignItems="center">
                             <Grid item>
-                                Create new trip
+                                <Link onClick={console.log}>Create new trip</Link>
                             </Grid>
                             <Grid item mx={1}>·</Grid>
                             <Grid item my={2}>
-                                Invite friends
+                                <Link onClick={() => setModalVisible({visible: true, action: 'INVITE'})}>Invite friends</Link>
                             </Grid>
                             <Grid item mx={1}>·</Grid>
                             <Grid item>
-                                Edit group
+                                <Link onClick={() => setModalVisible({visible: true, action: 'EDIT'})}>Edit group</Link>
+                            </Grid>
+                            <Grid item mx={1}>·</Grid>
+                            <Grid item>
+                                <Link onClick={() => setModalVisible({visible: true, action: 'LEAVE'})}>Leave group</Link>
                             </Grid>
 
                         </Grid>
@@ -94,6 +101,57 @@ export default function Group() {
                 </Grid>
             ) : (
                 <div>Loading ... </div>
+            )} 
+
+            {modalVisible.action === 'EDIT' ? (
+                <Modal disableAutoFocus={true} open={true} onClose={() => setModalVisible({visible: false, action: ''})}>
+                    <Box sx={{
+                        borderRadius: '10px',
+                        backgroundColor: 'white',
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                    }}>
+                        <EditGroup handleToggleModal={setModalVisible} />
+                    </Box>
+                </Modal>
+            ) : (
+                <></>
+            )} 
+
+            {modalVisible.action === 'INVITE' ? (
+                <Modal disableAutoFocus={true} open={true} onClose={() => setModalVisible({visible: false, action: ''})}>
+                    <Box sx={{
+                        borderRadius: '10px',
+                        backgroundColor: 'white',
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                    }}>
+                        <InviteFriends handleToggleModal={setModalVisible} mode="GROUP" />
+                    </Box>
+                </Modal>
+            ) : (
+                <></>
+            )} 
+
+            {modalVisible.action === 'LEAVE' ? (
+                <Modal disableAutoFocus={true} open={true} onClose={() => setModalVisible({visible: false, action: ''})}>
+                    <Box sx={{
+                        borderRadius: '10px',
+                        backgroundColor: 'white',
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                    }}>
+                        <LeaveGroup handleToggleModal={setModalVisible} />
+                    </Box>
+                </Modal>
+            ) : (
+                <></>
             )} 
         </div>
     )

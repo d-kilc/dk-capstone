@@ -126,7 +126,7 @@ export default function Trip() {
                         left: '50%',
                         transform: 'translate(-50%, -50%)',
                     }}>
-                        <InviteFriends handleToggleModal={setModalVisible} />
+                        <InviteFriends handleToggleModal={setModalVisible} mode="TRIP" />
                     </Box>
                 </Modal>
             ) : (

@@ -9,11 +9,26 @@ export default function groupReducer(state = { currentGroup: null, isGroupCreato
                 currentGroup: payload.currentGroup,
                 // isGroupCreator: idxOfCreator === idxOfUser
             }
-        // case 'USER_IS_GROUP_CREATOR':
-        //     return {
-        //         ...state,
-        //         isGroupCreator: payload
-        //     }
+        case 'SAVE_UPDATED_GROUP':
+            return {
+                ...state,
+                currentGroup: {
+                    ...state.currentGroup,
+                    name: payload.name
+                }
+            }
+        case 'UPDATE_GROUP_USERS':
+            return {
+                ...state,
+                currentGroup: {
+                    ...state.currentGroup,
+                    user_groups: [...state.currentGroup.user_groups, {
+                        id: payload.id,
+                        role: 'collaborator',
+                        user: {...payload.user}
+                    }]
+                }
+            }
         default:
             return state
     }

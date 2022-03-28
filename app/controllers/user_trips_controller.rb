@@ -1,7 +1,6 @@
 class UserTripsController < ApplicationController
     def create
         user_trip = UserTrip.create! user_trip_params
-        # byebug
         render json: user_trip, status: 201, serializer: UserTripSerializer
     end
 
