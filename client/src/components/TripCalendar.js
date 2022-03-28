@@ -21,12 +21,6 @@ export default function TripCalendar() {
     console.log(auth)
     const trip = useSelector(state => state.trip)
     console.log(trip)
-    // const events = useSelector(state => state.events)
-    // console.log(events)
-
-    // function handlePostEvent() {
-    //     fetch('/trips/')
-    // }
 
     useEffect(() => {
         fetch(`/trips/${trip.currentTrip.id}/events`)
@@ -46,16 +40,6 @@ export default function TripCalendar() {
                 })
             }
         })
-        // return events.map((event) => {
-        //     return {
-        //         name: event.name,
-        //         description: event.description,
-        //         start: new Date(event.start),
-        //         end: new Date(event.end),
-        //         allDay: false,
-        //         resource: event.id,
-        //     }
-        // })
     }, [])
 
     function buildSegmentEvents() {
@@ -86,7 +70,6 @@ export default function TripCalendar() {
 
     const segmentEvents = buildSegmentEvents()
     const events = buildEvents()
-    // const trip
 
     function handleDisplayEventDetail(event) {
         store.dispatch({
@@ -160,9 +143,7 @@ export default function TripCalendar() {
             </Modal>
         ) : (
             <></>
-        )}
-
-        
+        )}        
         </>
     )
 }

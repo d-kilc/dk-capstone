@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
   post '/trips', to: 'trips#create'
   get '/trips/:id', to: 'trips#show'
+  patch '/trips/:id', to: 'trips#update'
 
   resources :trips, only: [:show] do
     resources :events, only: [:index]
@@ -23,6 +24,7 @@ Rails.application.routes.draw do
 
   post '/events', to: 'events#create'
   delete '/events/:id', to: 'events#destroy'
+  patch '/events/:id', to: 'events#update'
   # get '/trips/:id', to: 'trips#show' do
   #   get '/events', to: 'events#show'
   # end

@@ -2,6 +2,7 @@ export default function tripReducer(state = {
     events: [],
     currentEvent: {},
     newEvent: {},
+    // currentTrip: {}
 }, action) {
     const { type, payload } = action
     switch (type) {
@@ -9,6 +10,22 @@ export default function tripReducer(state = {
             return {
                 ...state,
                 currentTrip: payload,
+            }
+        case 'UPDATE_TRIP':
+            return {
+                ...state,
+                currentTrip: {
+                    ...state.currentTrip,
+                    name: payload.name
+                }
+            }
+        case 'SAVE_UPDATED_TRIP':
+            return {
+                ...state,
+                currentTrip: {
+                    ...state.currentTrip,
+                    name: payload.name
+                }
             }
         case 'SET_EVENTS':
             return {
@@ -19,6 +36,26 @@ export default function tripReducer(state = {
             return {
                 ...state,
                 currentEvent: {...payload}
+            }
+        case 'UPDATE_EVENT':
+            return {
+                ...state,
+                currentEvent: {
+                    ...state.currentEvent,
+                    [payload.key]: payload.value,
+                }
+            }
+        case 'SAVE_UPDATED_EVENT':
+            const updateIdx = state.events.findIndex(event => event.id === payload.id)
+            const copy = [...state.events]
+            copy[updateIdx] = {
+                ...state.events[updateIdx],
+                name: payload.name,
+                description: payload.description,
+            } 
+            return {
+                ...state,
+                events: [...copy]
             }
         case 'DELETE_EVENT':
             const eventsCopy = [...state.events]

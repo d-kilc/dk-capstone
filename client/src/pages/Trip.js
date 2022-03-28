@@ -1,11 +1,12 @@
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import { Typography, Grid, Card, Button } from '@mui/material'
+import { Typography, Grid, Card, Button, Modal, Box, Link } from '@mui/material'
 import store from '../store'
 import { useSelector } from 'react-redux'
 import UserBadge from '../components/UserBadge'
 import TripCalendar from '../components/TripCalendar'
 import SegmentTable from '../components/SegmentTable'
+import EditTrip from '../components/EditTrip'
 
 export default function Trip() {
     const location = useLocation()
@@ -14,6 +15,8 @@ export default function Trip() {
 
     const trip = useSelector(state => state.trip)
     console.log('trip: ', trip)
+
+    const [modalVisible, setModalVisible] = useState({visible: false, action: ''})
 
     useEffect(() => {
         fetch(`/trips/${tripId}`)
@@ -39,11 +42,6 @@ export default function Trip() {
     return (
         // TO DO:
         // - display trip members
-        // - calendar section
-        //    - add events
-        //    - delete events (as event creator)
-        //    - edit events (as event creator)
-        //    - see all events for group
         // - agenda section
         //    - see trip segments
         //    - show trip on map (read only)
@@ -64,7 +62,7 @@ export default function Trip() {
                             </Grid>
                             <Grid item mx={1}>·</Grid>
                             <Grid item>
-                                Edit trip
+                                <Link onClick={() => setModalVisible({visible: true, action: 'EDIT'})}>Edit trip</Link>
                             </Grid>
                         </Grid>
                         <Grid container>
@@ -88,6 +86,25 @@ export default function Trip() {
             ) : (
                 <div>Loading ... </div>
             )} 
+
+            {modalVisible.action === 'EDIT' ? (
+                <Modal disableAutoFocus={true} open={true} onClose={() => setModalVisible({visible: false, action: ''})}>
+                    <Box sx={{
+                        borderRadius: '10px',
+                        backgroundColor: 'white',
+                        // width: '50%',
+                        // height: '50%',
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                    }}>
+                        <EditTrip handleToggleModal={setModalVisible} />
+                    </Box>
+                </Modal>
+            ) : (
+                <></>
+            )}   
         </div>
     )
 }

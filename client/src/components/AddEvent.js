@@ -62,12 +62,6 @@ export default function AddEvent({ handleToggleModal }) {
             <Grid item xs={12} >
                 <TextField fullWidth value={trip.newEvent.name} onChange={handleChangeInput} label='name' name='name'/>
             </Grid>
-            {/* <Grid item xs={12} sm={6} >
-                <TextField fullWidth type='datetime-local' value={trip.newEvent.start} onChange={handleChangeInput} label='start' name='start'/>
-            </Grid>
-            <Grid item xs={12} sm={6} >
-                <TextField fullWidth type='datetime-local' value={trip.newEvent.end} onChange={handleChangeInput} label='end' name='end'/>
-            </Grid> */}
             <Grid item xs={12} >
                 <TextField multiline minRows={10} maxRows={10} fullWidth value={trip.newEvent.description} onChange={handleChangeInput} label='description' name='description'/>
             </Grid>

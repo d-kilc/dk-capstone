@@ -30,6 +30,12 @@ class TripsController < ApplicationController
         render json: trip, status: 200, serializer: TripDetailSerializer
     end
 
+    def update
+        trip = Trip.find params[:id]
+        trip.update! trip_params
+        render json: trip, status: 200
+    end
+
     private
 
     def trip_params
