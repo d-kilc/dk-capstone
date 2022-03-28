@@ -8,31 +8,13 @@ export default function EditEvent({ handleToggleModal }) {
     console.log(trip)
 
     function handleUpdateEvent(e, id) {
-        // fetch(`/events/${id}`, {
-        //     method: 'PATCH',
-        //     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        //     body: {
-        //         [e.target.name]: e.target.value
-        //     }
-        // })
-        // .then(res => {
-        //     if (res.ok) {
-        //         res.json().then(data => {
-                    store.dispatch({
-                        type: 'UPDATE_EVENT',
-                        payload: {
-                            key: e.target.name,
-                            value: e.target.value,
-                        }
-                    })
-        //         })
-        //     } else {
-        //         res.json().then(data => {
-        //             alert(data.errors)
-        //         })
-        //     }
-        // })
-        
+        store.dispatch({
+            type: 'UPDATE_EVENT',
+            payload: {
+                key: e.target.name,
+                value: e.target.value,
+            }
+        })
     }
 
     function handleDeleteEvent(id) {

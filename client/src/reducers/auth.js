@@ -24,6 +24,21 @@ export default function authReducer(state = { user: null, loggedIn: false}, acti
                 ...state,
                 ...payload
             }
+        case 'DELETE_TRIP':
+            // payload.id
+            const deleteIdx = state.user.user_trips.findIndex(userTrip => {
+                return userTrip.trip.id === payload.id
+            })
+            console.log(deleteIdx)
+            const userTripsCopy = [...state.user.user_trips]
+            userTripsCopy.splice(deleteIdx, 1)
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    user_trips: [...userTripsCopy],
+                }
+            }
         default:
             return state
     }

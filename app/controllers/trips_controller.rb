@@ -36,6 +36,12 @@ class TripsController < ApplicationController
         render json: trip, status: 200
     end
 
+    def destroy
+        trip = Trip.find params[:id]
+        trip.destroy!
+        render json: {}, status: 200
+    end
+
     private
 
     def trip_params

@@ -7,6 +7,8 @@ import UserBadge from '../components/UserBadge'
 import TripCalendar from '../components/TripCalendar'
 import SegmentTable from '../components/SegmentTable'
 import EditTrip from '../components/EditTrip'
+import DeleteTrip from '../components/DeleteTrip'
+import InviteFriends from '../components/InviteFriends'
 
 export default function Trip() {
     const location = useLocation()
@@ -58,11 +60,15 @@ export default function Trip() {
                         <Typography mt={3} variant="h3">{trip.currentTrip.name}</Typography>
                         <Grid container alignItems="center">
                             <Grid item my={2}>
-                                Invite Friends
+                                <Link onClick={() => setModalVisible({visible: true, action: 'INVITE'})}>Invite Friends</Link>
                             </Grid>
                             <Grid item mx={1}>·</Grid>
                             <Grid item>
                                 <Link onClick={() => setModalVisible({visible: true, action: 'EDIT'})}>Edit trip</Link>
+                            </Grid>
+                            <Grid item mx={1}>·</Grid>
+                            <Grid item>
+                                <Link onClick={() => setModalVisible({visible: true, action: 'DELETE'})}>Delete trip</Link>
                             </Grid>
                         </Grid>
                         <Grid container>
@@ -92,8 +98,6 @@ export default function Trip() {
                     <Box sx={{
                         borderRadius: '10px',
                         backgroundColor: 'white',
-                        // width: '50%',
-                        // height: '50%',
                         position: 'absolute',
                         top: '50%',
                         left: '50%',
@@ -105,6 +109,42 @@ export default function Trip() {
             ) : (
                 <></>
             )}   
+
+            {modalVisible.action === 'INVITE' ? (
+                <Modal disableAutoFocus={true} open={true} onClose={() => setModalVisible({visible: false, action: ''})}>
+                    <Box sx={{
+                        borderRadius: '10px',
+                        backgroundColor: 'white',
+                        position: 'absolute',
+                        width: '70%',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                    }}>
+                        <InviteFriends handleToggleModal={setModalVisible} />
+                    </Box>
+                </Modal>
+            ) : (
+                <></>
+            )} 
+
+            {modalVisible.action === 'DELETE' ? (
+                <Modal disableAutoFocus={true} open={true} onClose={() => setModalVisible({visible: false, action: ''})}>
+                    <Box sx={{
+                        borderRadius: '10px',
+                        backgroundColor: 'white',
+                        position: 'absolute',
+                        width: '70%',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                    }}>
+                        <DeleteTrip handleToggleModal={setModalVisible} id={tripId}/>
+                    </Box>
+                </Modal>
+            ) : (
+                <></>
+            )} 
         </div>
     )
 }

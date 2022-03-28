@@ -4,12 +4,12 @@ import auth from './auth'
 import trip from './trip'
 import group from './group'
 import newTrip from './newTrip'
-// import events from './events'
+import users from './users'
 
 export default combineReducers({
     auth,
     group,
     trip,
     newTrip,
-    // events,
+    users,
 })

@@ -1,4 +1,4 @@
-import { Grid, Typography, TextField, Button } from '@mui/material'
+import { Grid, Typography, TextField, ButtonGroup, Button } from '@mui/material'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import store from '../store'
@@ -9,14 +9,7 @@ export default function EditTrip({ handleToggleModal }) {
     const [newName, setNewName] = useState(trip.currentTrip.name)
 
     function handleUpdateTrip(e) {
-        // store.dispatch({
-        //     type: 'UPDATE_TRIP',
-        //     payload: {
-        //         name: e.target.value
-        //     }
-        // })
         setNewName(e.target.value)
-
     }
 
     function handleSaveUpdatedTrip(trip) {
@@ -51,7 +44,10 @@ export default function EditTrip({ handleToggleModal }) {
                 <TextField fullWidth value={newName} label="name" name="name" onChange={handleUpdateTrip}/>
             </Grid>
             <Grid item xs={12} m={2} >
-                <Button onClick={() => handleSaveUpdatedTrip(trip.currentTrip)} variant="contained" color="success">Save</Button>
+                <ButtonGroup>
+                    <Button onClick={() => handleSaveUpdatedTrip(trip.currentTrip)} variant="contained" color="success">Save</Button>
+                    <Button variant="contained" color="error" onClick={() => handleToggleModal({visible: false, action: ''})}>Cancel</Button>
+                </ButtonGroup>
             </Grid>
         </Grid>
     )
