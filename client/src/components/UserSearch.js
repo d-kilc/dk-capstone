@@ -10,9 +10,10 @@ export default function UserSearch() {
 
     const users = useSelector(state => state.users)
     const auth = useSelector(state => state.auth)
+    const trip = useSelector(state => state.trip)
     console.log(users)
-    const [searchText, setSearchText] = useState('')
 
+    // this needs to be reimagined but fine for now
     useEffect(() => {
         fetch('/users')
         .then(res => {
@@ -31,13 +32,27 @@ export default function UserSearch() {
             }
         })
     }, [])
-
+    
     return (
         <Autocomplete
             multiple
-            id="tags-standard"
-            options={users}
+            options={users.allUsers}
             getOptionLabel={(option) => option.email}
+            renderOption={(props, option) => {
+                const userTripIds = trip.currentTrip.user_trips.map(userTrip => userTrip.id)
+                if (option.id in userTripIds) return <></>
+                if (option.id === auth.user.id) return <></>
+                else return <li {...props}>{option.email}</li>
+            }}
+            onChange={(event, newValue) => {
+                // setSelectedUsers([...selectedUsers, newValue])
+                store.dispatch({
+                    type: 'SELECT_USERS',
+                    payload: {
+                        users: newValue
+                    }
+                })
+            }}
             renderInput={(params) => (
                 <TextField
                     {...params}

@@ -30,4 +30,7 @@ Rails.application.routes.draw do
   #   get '/events', to: 'events#show'
   # end
 
+  post '/user_trips', to: 'user_trips#create'
+  delete '/user_trips/:id', to: 'user_trips#destroy'
+
 end

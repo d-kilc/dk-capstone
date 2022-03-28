@@ -29,6 +29,13 @@ export default function EditTrip({ handleToggleModal }) {
                         name: newName
                     }
                 })
+                store.dispatch({
+                    type: 'UPDATE_TRIPS',
+                    payload: {
+                        name: newName,
+                        id: trip.id
+                    }
+                })
                 handleToggleModal({visible: false, action: ''})
 
             }

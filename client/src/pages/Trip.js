@@ -8,6 +8,7 @@ import TripCalendar from '../components/TripCalendar'
 import SegmentTable from '../components/SegmentTable'
 import EditTrip from '../components/EditTrip'
 import DeleteTrip from '../components/DeleteTrip'
+import LeaveTrip from '../components/LeaveTrip'
 import InviteFriends from '../components/InviteFriends'
 
 export default function Trip() {
@@ -70,6 +71,10 @@ export default function Trip() {
                             <Grid item>
                                 <Link onClick={() => setModalVisible({visible: true, action: 'DELETE'})}>Delete trip</Link>
                             </Grid>
+                            <Grid item mx={1}>·</Grid>
+                            <Grid item>
+                                <Link onClick={() => setModalVisible({visible: true, action: 'LEAVE'})}>Leave trip</Link>
+                            </Grid>
                         </Grid>
                         <Grid container>
                             {trip.currentTrip.user_trips.map(userTrip => {
@@ -90,7 +95,7 @@ export default function Trip() {
                     </Grid>
                 </Grid>
             ) : (
-                <div>Loading ... </div>
+                <></>
             )} 
 
             {modalVisible.action === 'EDIT' ? (
@@ -140,6 +145,23 @@ export default function Trip() {
                         transform: 'translate(-50%, -50%)',
                     }}>
                         <DeleteTrip handleToggleModal={setModalVisible} id={tripId}/>
+                    </Box>
+                </Modal>
+            ) : (
+                <></>
+            )} 
+
+            {modalVisible.action === 'LEAVE' ? (
+                <Modal disableAutoFocus={true} open={true} onClose={() => setModalVisible({visible: false, action: ''})}>
+                    <Box sx={{
+                        borderRadius: '10px',
+                        backgroundColor: 'white',
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                    }}>
+                        <LeaveTrip handleToggleModal={setModalVisible} id={tripId}/>
                     </Box>
                 </Modal>
             ) : (

@@ -27,6 +27,14 @@ export default function tripReducer(state = {
                     name: payload.name
                 }
             }
+        case 'UPDATE_TRIP_USERS':
+            return {
+                ...state,
+                currentTrip: {
+                    ...state.currentTrip,
+                    user_trips: [...state.currentTrip.user_trips, {id: payload.id, user: {...payload.user}}]
+                }
+            }
         case 'SET_EVENTS':
             return {
                 ...state,
