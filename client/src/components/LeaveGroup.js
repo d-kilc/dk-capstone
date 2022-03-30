@@ -44,13 +44,11 @@ export default function LeaveGroup({ handleToggleModal, id }) {
                 <Typography variant="h5">Leave group</Typography>
             </Grid>
             <Grid item xs={12} m={2} >
-                <Typography variant="body2" textAlign="center">Are you sure? If you wish to re-join the group, you will have to be re-invited. This action cannot be undone.</Typography>
+                <Typography variant="h6" textAlign="center">Are you sure? If you wish to re-join the group, you will have to be re-invited. This action cannot be undone.</Typography>
             </Grid>
-            <Grid item xs={12} m={2} >
-                <ButtonGroup>
-                    <Button variant="contained" color="error" onClick={() => handleLeaveGroup()}>Yes, I'm sure</Button>
-                    <Button onClick={() => handleToggleModal({ visible: false, action: '' })} variant="contained" color="success">No, go back</Button>
-                </ButtonGroup>
+            <Grid item xs={12} m={2} display='flex' justifyContent='space-between'>
+                <Button color="error" onClick={() => handleLeaveGroup()}>Yes, I'm sure</Button>
+                <Button onClick={() => handleToggleModal({ visible: false, action: '' })} color="success">No, go back</Button>
             </Grid>
         </Grid>
     )

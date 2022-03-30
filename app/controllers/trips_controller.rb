@@ -18,7 +18,22 @@ class TripsController < ApplicationController
             )
         end
 
-        user_trip = UserTrip.create! user_id: params[:user_id], trip_id: trip.id, role: 'creator'
+        if params[:user_ids].size > 0
+            params[:user_ids].each do |user_id|
+                user_trip = UserTrip.new user_id: user_id, trip_id: trip.id
+
+                if user_id == params[:user_id]
+                    user_trip.role = 'collaborator'
+                else
+                    user_trip.role = 'creator'
+                end
+                
+                user_trip.save!
+            end
+        else
+            user_trip = UserTrip.create! user_id: params[:user_id], trip_id: trip.id, role: 'creator'
+        end
+
 
         render json: trip, status: 201, serializer: TripDetailSerializer
 

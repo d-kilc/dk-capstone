@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import UserBadge from '../components/UserBadge'
 import TripCalendar from '../components/TripCalendar'
 import SegmentTable from '../components/SegmentTable'
+import ManageSegment from '../components/ManageSegment'
 import EditTrip from '../components/EditTrip'
 import DeleteTrip from '../components/DeleteTrip'
 import LeaveTrip from '../components/LeaveTrip'
@@ -83,16 +84,18 @@ export default function Trip() {
                         </Grid>
                     </Grid>
                     <Grid item xs={12}>
+                        <Typography variant="h5" m={1}>Agenda</Typography>
                         <TripCalendar />
                     </Grid>
-                    <Grid item xs={12} md={6}>
-                        <Typography variant="h5">Travel</Typography>
-                        <SegmentTable />
+                    {/* <Grid item xs={12} md={6}> */}
+                    <Grid item xs={12}>
+                        <Typography variant="h5" m={1}>Travel</Typography>
+                        <SegmentTable handleToggleModal={setModalVisible} />
                     </Grid>
-                    <Grid item xs={12} md={6}>
+                    {/* <Grid item xs={12} md={6}>
                         <Typography variant="h5">Explore</Typography>
                         <div>[This is a feed of articles about the cities involved in the trip]</div>
-                    </Grid>
+                    </Grid> */}
                 </Grid>
             ) : (
                 <></>
@@ -162,6 +165,31 @@ export default function Trip() {
                         transform: 'translate(-50%, -50%)',
                     }}>
                         <LeaveTrip handleToggleModal={setModalVisible} id={tripId}/>
+                    </Box>
+                </Modal>
+            ) : (
+                <></>
+            )} 
+
+            {modalVisible.action === 'MANAGE' ? (
+                <Modal disableAutoFocus={true} open={true} onClose={() => setModalVisible({visible: false, action: ''})}>
+                    <Box sx={{
+                        borderRadius: '10px',
+                        backgroundColor: 'white',
+                        position: 'absolute',
+                        height: {
+                            xs: '800px',
+                            // md: '800'
+                        },
+                        width: {
+                            xs: '90%',
+                            md: '900px',
+                        },
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                    }}>
+                        <ManageSegment handleToggleModal={setModalVisible} segment={modalVisible.segment} until={modalVisible.until}/>
                     </Box>
                 </Modal>
             ) : (

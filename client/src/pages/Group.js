@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, Link as RouterLink  } from 'react-router-dom'
 import { Typography, Grid, Link, Modal, Box } from '@mui/material'
 import store from '../store'
 import { useSelector } from 'react-redux'
@@ -45,6 +45,7 @@ export default function Group() {
             if (res.ok) {
                 res.json()
                 .then(data => {
+                    console.log(data)
                     store.dispatch({
                         type: 'SET_GROUP',
                         payload: {currentGroup: data}
@@ -52,13 +53,14 @@ export default function Group() {
                 })
             } else {
                 res.json().then(data => {
-                    // TO DO: error handling
-                    console.log(data)
-                    alert('oops')
+                    alert(data.errors)
                 })
             }
         })
     }, [])
+console.log('group.currentGroup: ', group.currentGroup)
+
+    const groupUsers = group.currentGroup && group.currentGroup.user_groups.map(userGroup => userGroup.user)
 
     return (
         // TO DO:
@@ -77,7 +79,7 @@ export default function Group() {
                         <Typography mt={3} variant="h3">{group.currentGroup.name}</Typography>
                         <Grid container alignItems="center">
                             <Grid item>
-                                <Link onClick={console.log}>Create new trip</Link>
+                                <RouterLink to={'/new-trip'} state={{ users: groupUsers }} onClick={console.log}>Create new trip</RouterLink>
                             </Grid>
                             <Grid item mx={1}>·</Grid>
                             <Grid item my={2}>

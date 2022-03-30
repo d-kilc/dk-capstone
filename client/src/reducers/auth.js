@@ -63,6 +63,14 @@ export default function authReducer(state = { user: null, loggedIn: false}, acti
                     user_trips: [...newUserTrips]
                 }
             }
+        case 'NEW_GROUP':
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    user_groups: [...state.user.user_groups, payload]
+                }
+            }
         case 'LEAVE_GROUP':
             const groupIdx = state.user.user_groups.findIndex(userGroup => userGroup.id === payload.id)
             const newUserGroups = [...state.user.user_groups]

@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
 
     def index
-        events = Event.all
+        events = Event.where trip_id: params[:trip_id]
         render json: events, status: 200
     end
 

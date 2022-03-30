@@ -32,6 +32,9 @@
 
 # environment-related
 .env
+/client/.env
 
 # api stuffs
 /client/src/config
+# Ignore application configuration
+/config/application.yml

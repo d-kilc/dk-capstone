@@ -32,13 +32,11 @@ export default function DeleteTrip({ handleToggleModal, id }) {
                 <Typography variant="h5">Delete trip</Typography>
             </Grid>
             <Grid item xs={12} m={2} >
-                <Typography variant="body2" textAlign="center">Are you sure? All accompanying data for this trip will be permanently deleted. This action cannot be undone.</Typography>
+                <Typography variant="h6" textAlign="center">Are you sure? All data for this trip will be permanently deleted. This action cannot be undone.</Typography>
             </Grid>
-            <Grid item xs={12} m={2} >
-                <ButtonGroup>
-                    <Button variant="contained" color="error" onClick={() => handleDeleteTrip(id)}>Yes, I'm sure</Button>
-                    <Button onClick={() => handleToggleModal({ visible: false, action: '' })} variant="contained" color="success">No, go Back</Button>
-                </ButtonGroup>
+            <Grid item xs={12} m={2} display='flex' justifyContent='space-between'>
+                <Button color="error" onClick={() => handleDeleteTrip(id)}>Yes, I'm sure</Button>
+                <Button onClick={() => handleToggleModal({ visible: false, action: '' })} color="success">No, go Back</Button>
             </Grid>
         </Grid>
     )

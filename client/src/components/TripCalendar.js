@@ -9,8 +9,6 @@ import { useState } from 'react'
 import AddEvent from './AddEvent'
 import EditEvent from './EditEvent'
 
-
-
 const localizer = momentLocalizer(moment)
 
 export default function TripCalendar() {
@@ -18,9 +16,7 @@ export default function TripCalendar() {
     const [modalVisible, setModalVisible] = useState({visible: false, action: ''})
 
     const auth = useSelector(state => state.auth)
-    console.log(auth)
     const trip = useSelector(state => state.trip)
-    console.log(trip)
 
     useEffect(() => {
         fetch(`/trips/${trip.currentTrip.id}/events`)
@@ -80,7 +76,6 @@ export default function TripCalendar() {
     }
 
     function handleCreateNewEvent(e) {
-        console.log(e)
         store.dispatch({
             type: 'INITIALIZE_NEW_EVENT',
             payload: {
@@ -131,8 +126,8 @@ export default function TripCalendar() {
                 <Box sx={{
                     borderRadius: '10px',
                     backgroundColor: 'white',
-                    // width: '50%',
-                    // height: '50%',
+                    width: '70%',
+                    height: '70%',
                     position: 'absolute',
                     top: '50%',
                     left: '50%',

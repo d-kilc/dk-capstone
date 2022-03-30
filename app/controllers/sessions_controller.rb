@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
             session[:user_id] ||= user.id
             render json: user, status: 200
         else
-            render json: { error: "Invalid credentials.", email: 'Unauthorized' }, status: 401
+            render json: { errors: "Invalid credentials.", email: 'Unauthorized' }, status: 401
         end
     end
 

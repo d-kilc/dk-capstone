@@ -1,4 +1,4 @@
-export default function tripReducer(state = {
+export default function newTripReducer(state = {
     name: '',
     modalVisible: false,
     segments: [{
@@ -68,6 +68,20 @@ export default function tripReducer(state = {
             return { ...state, modalVisible: !state.modalVisible}
         case 'SET_TRIP_NAME':
             return { ...state, name: payload }
+        case 'RESET_NEW_TRIP':
+            return {
+                name: '',
+                modalVisible: false,
+                segments: [{
+                    from: '',
+                    to: '',
+                    when: '',
+                    how: '',
+                    tripSequence: 1,
+                    modalVisible: false,
+                    placeIds: []
+                }]
+            }
         default:
             return state
     }

@@ -15,8 +15,8 @@ import { ThemeProvider } from '@material-ui/core/styles'
 import theme from './theme'
 import { useSelector } from 'react-redux'
 import store from './store'
-import accessToken from './config/config.js'
-import {Wrapper,Status} from '@googlemaps/react-wrapper'
+import { google } from './config/config.js'
+import {Wrapper, Status} from '@googlemaps/react-wrapper'
 
 export default function App() {
 
@@ -48,7 +48,7 @@ export default function App() {
   }
   console.log(window)
   return (
-    <Wrapper libraries={['places']} apiKey={accessToken} render={render}>
+    <Wrapper libraries={['places']} apiKey={google} render={render}>
       <ThemeProvider theme={theme}>
       
         <Navbar />

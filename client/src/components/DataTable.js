@@ -1,65 +1,79 @@
-import * as React from 'react';
+import * as React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import UserBadge from './UserBadge'
-import Paper from '@mui/material/Paper';
+import { 
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Modal,
+  Box
+} from '@mui/material'
+import LeaveGroup from './LeaveGroup'
+import LeaveTrip from './LeaveTrip'
 
 export default function DataTable({data, mode}) {
 
-  const userTrips = useSelector(state => state.auth.user.user_trips)
-  console.log('userTrips:', userTrips)
-
-  const userGroups = useSelector(state => state.auth.user.user_groups)
-  console.log('userGroups:', userGroups)
-
+  const [modalVisible, setModalVisible] = React.useState({visible: true, action: ''})
   const navigate = useNavigate()
 
   const rows = data.map(object => {
       if (object.hasOwnProperty('group')) {
         return (
-            <TableRow sx={{'&:hover': {backgroundColor: '#ececec'}}} onClick={() => navigate(`/groups/${object.group.id}`, { state: object.group.id })}>
+          <>
+            <TableRow>
                 <TableCell align="left">{object.group.name}</TableCell>
-                <TableCell>trip members go here</TableCell>
+                <TableCell display='flex'>
+                  <Button onClick={() => navigate(`/groups/${object.group.id}`, { state: object.group.id })}>Manage</Button>
+                </TableCell>
             </TableRow>
+          </>
         )
       } else {
         return (
-            <TableRow sx={{'&:hover': {backgroundColor: '#ececec'}}} onClick={() => navigate(`/trips/${object.trip.id}`, { state: object.trip.id })}>
+          <>
+            <TableRow>
                 <TableCell align="left">{object.trip.name}</TableCell>
-                <TableCell>group members go here</TableCell>
+                <TableCell display='flex'>
+                  <Button onClick={() => navigate(`/trips/${object.trip.id}`, { state: object.trip.id })}>Manage</Button>
+                </TableCell>
             </TableRow>
+          </>
         )
 
       }
   })
   
   return (
-    <TableContainer component={Paper}>
-      <Table  aria-label="simple table">
-        <TableHead>
-        {mode === 'GROUPS' ?
-            (
+    <>
+    <Box sx={{
+      height: {
+        xs: '350px',
+        // md: '570px',
+      },
+      width: {
+          xs: '100%',
+      },
+      overflow: 'scroll',
+      }}>
+      {/* <TableContainer component={Paper}> */}
+        <Table stickyHeader>
+          <TableHead>
             <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell align="left">Members</TableCell>
+                <TableCell sx={{width: { xs: '80%', md: '80%' }}}>Name</TableCell>
+                <TableCell align="left">Actions</TableCell>
             </TableRow>
-        ) : (
-            <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell align="left">Friends</TableCell>
-            </TableRow>
-        )}
-        </TableHead>
-        <TableBody>
-          {rows}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {rows}
+          </TableBody>
+        </Table>
+      {/* </TableContainer> */}
+    </Box>
+    </>
   )
 }

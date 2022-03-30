@@ -35,13 +35,12 @@ export default function AddEvent({ handleToggleModal }) {
         .then(res => {
             if (res.ok) {
                 res.json().then(data => {
-                    console.log(data)
                     store.dispatch({ type: 'CREATE_EVENT', payload: { ...trip.newEvent, ...data } })
                     handleToggleModal({visible: false, action: ''})
                 })
             } else {
                 res.json().then(data => {
-                    console.log(data)
+                    alert(data.errors)
                 })
             }
         })
@@ -52,21 +51,22 @@ export default function AddEvent({ handleToggleModal }) {
     }
 
     return (
-        <Grid container mx={2}>
-            <Grid item xs={12} my={2} >
+        <Grid container spacing={2} >
+            <Grid item xs={12} m={2} >
                 <Typography variant="h5">New event</Typography>
             </Grid>
-            <Grid item xs={12} >
-                <Typography m={2} textAlign="center">{`${formatDate(trip.newEvent.start)} until ${formatDate(trip.newEvent.end)}`}</Typography>
+            <Grid item xs={12} m={2}>
+                <Typography textAlign="center">{`${formatDate(trip.newEvent.start)} until ${formatDate(trip.newEvent.end)}`}</Typography>
             </Grid>
-            <Grid item xs={12} >
+            <Grid item xs={12} m={2}>
                 <TextField fullWidth value={trip.newEvent.name} onChange={handleChangeInput} label='name' name='name'/>
             </Grid>
-            <Grid item xs={12} >
-                <TextField multiline minRows={10} maxRows={10} fullWidth value={trip.newEvent.description} onChange={handleChangeInput} label='description' name='description'/>
+            <Grid item xs={12} m={2}>
+                <TextField multiline fullHeight rows={11} fullWidth value={trip.newEvent.description} onChange={handleChangeInput} label='description' name='description'/>
             </Grid>
-            <Grid item xs={12} m={2} >
-                <Button onClick={() => handleSaveEvent()} variant="contained" color="success">Save</Button>
+            <Grid item xs={12} m={2} display='flex' justifyContent='space-between'>
+                <Button onClick={() => handleSaveEvent()} color="success">Save</Button>
+                <Button onClick={() => handleToggleModal({visible: false, action: ''})} color="error">Cancel</Button>
             </Grid>
         </Grid>
     )

@@ -7,6 +7,8 @@ export default function EditTrip({ handleToggleModal }) {
 
     const trip = useSelector(state => state.trip)
     const [newName, setNewName] = useState(trip.currentTrip.name)
+    console.log(trip)
+
 
     function handleUpdateTrip(e) {
         setNewName(e.target.value)
@@ -37,7 +39,10 @@ export default function EditTrip({ handleToggleModal }) {
                     }
                 })
                 handleToggleModal({visible: false, action: ''})
-
+            } else {
+                res.json().then(data => {
+                    alert(data.errors)
+                })
             }
         })
     }
@@ -50,11 +55,9 @@ export default function EditTrip({ handleToggleModal }) {
             <Grid item xs={12} m={2} >
                 <TextField fullWidth value={newName} label="name" name="name" onChange={handleUpdateTrip}/>
             </Grid>
-            <Grid item xs={12} m={2} >
-                <ButtonGroup>
-                    <Button onClick={() => handleSaveUpdatedTrip(trip.currentTrip)} variant="contained" color="success">Save</Button>
-                    <Button variant="contained" color="error" onClick={() => handleToggleModal({visible: false, action: ''})}>Cancel</Button>
-                </ButtonGroup>
+            <Grid item xs={12} m={2} display='flex' justifyContent='space-between'>
+                <Button onClick={() => handleSaveUpdatedTrip(trip.currentTrip)} color="success">Save</Button>
+                <Button color="error" onClick={() => handleToggleModal({visible: false, action: ''})}>Cancel</Button>
             </Grid>
         </Grid>
     )

@@ -14,7 +14,7 @@ class Segment < ApplicationRecord
       previous_sequence = self.trip_sequence - 1
       previous_segment = Segment.find_by! trip_id: self.trip_id, trip_sequence: previous_sequence
       
-      if self.when > previous_segment.when
+      if self.when >= previous_segment.when
         return
       end
     

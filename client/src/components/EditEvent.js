@@ -1,4 +1,4 @@
-import { Typography, Button, ButtonGroup, Grid, TextField } from '@mui/material'
+import { Typography, Button, Grid, TextField } from '@mui/material'
 import { useSelector } from 'react-redux'
 import moment from 'moment'
 import store from '../store'
@@ -79,11 +79,12 @@ export default function EditEvent({ handleToggleModal }) {
             <Grid item xs={12} m={2} >
                 <TextField multiline fullWidth rows={10} value={trip.currentEvent.description} label="description" name="description" onChange={(e) => handleUpdateEvent(e, trip.currentEvent.resource)}/>
             </Grid>
-            <Grid item xs={12} m={2} >
-                <ButtonGroup ml={'auto'}>
-                    <Button onClick={() => handleSaveUpdatedEvent(trip.currentEvent.resource)}variant="contained" color="success">Save</Button>
-                    <Button onClick={() => handleDeleteEvent(trip.currentEvent.resource)} variant="contained" color="error">Delete</Button>
-                </ButtonGroup>
+            <Grid item xs={12} m={2} display='flex' justifyContent='space-between'>
+                <div>
+                    <Button onClick={() => handleSaveUpdatedEvent(trip.currentEvent.resource)} color="success">Save</Button>
+                    <Button onClick={() => handleDeleteEvent(trip.currentEvent.resource)} color="error">Delete</Button>
+                </div>
+                <Button onClick={() => handleToggleModal({visible: false, action: ''})} color='error'>Cancel</Button>
             </Grid>
         </Grid>
     )

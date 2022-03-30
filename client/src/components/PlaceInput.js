@@ -28,7 +28,7 @@ export default function PlaceInput({ name, thisSegment, value, handleUpdateFormD
     }
 
     return (
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={5} m={2}>
             {/* <TextField label={name} name={name} value={thisSegment[name]} onChange={handleUpdateInput}/> */}
             <Autocomplete disablePortal
                 getOptionLabel={option => option.label}

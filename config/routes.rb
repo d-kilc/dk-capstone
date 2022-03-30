@@ -1,10 +1,5 @@
 Rails.application.routes.draw do
-  # resources :events
-  # resources :segments
-  # resources :user_groups
-  # resources :groups
-  # resources :user_trips
-  # resources :trips
+
   resources :users
 
   post '/login', to: 'sessions#create'
@@ -12,7 +7,10 @@ Rails.application.routes.draw do
   get '/me', to: 'users#show'
 
   get '/groups/:id', to: 'groups#show'
+  post '/groups', to: 'groups#create'
   patch '/groups/:id', to: 'groups#update'
+  # TO DO
+  # delete '/groups/:id', to: 'groups#destroy'
 
   post '/trips', to: 'trips#create'
   get '/trips/:id', to: 'trips#show'
@@ -22,7 +20,6 @@ Rails.application.routes.draw do
   resources :trips, only: [:show] do
     resources :events, only: [:index]
   end
-
   post '/events', to: 'events#create'
   delete '/events/:id', to: 'events#destroy'
   patch '/events/:id', to: 'events#update'
@@ -32,5 +29,9 @@ Rails.application.routes.draw do
 
   post '/user_groups', to: 'user_groups#create'
   delete '/user_groups/:id', to: 'user_groups#destroy'
+
+  get '/accommodations/:keyword/:when/:until', to: 'accommodations#search'
+
+  get '/flights/:from/:to/:when', to: 'flights#search'
 
 end

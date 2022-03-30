@@ -29,7 +29,6 @@ export default function InviteFriends({handleToggleModal, mode}) {
                 .then(res => {
                     if (res.ok) {
                         res.json().then(data => {
-                            console.log(data)
                             store.dispatch({
                                 type: 'UPDATE_TRIP_USERS',
                                 payload: {
@@ -80,11 +79,9 @@ export default function InviteFriends({handleToggleModal, mode}) {
             <Grid item xs={12} m={2} >
                 <UserSearch mode={mode} />
             </Grid>
-            <Grid item xs={12} m={2} >
-                <ButtonGroup>
-                    <Button variant="contained" color="success" onClick={handleInviteUsers}>Add Friends</Button>
-                    <Button variant="contained" color="error" onClick={() => handleToggleModal({visible: false, action: ''})}>Cancel</Button>
-                </ButtonGroup>
+            <Grid item xs={12} m={2} display='flex' justifyContent='space-between'>
+                <Button color="success" onClick={handleInviteUsers}>Add Friends</Button>
+                <Button color="error" onClick={() => handleToggleModal({visible: false, action: ''})}>Cancel</Button>
             </Grid>
         </Grid>
     )

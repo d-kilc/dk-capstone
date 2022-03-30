@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { Grid, TextField, ButtonGroup, Button, Typography } from '@mui/material'
 import store from '../store'
 
 export default function Login({ handleLogIn }) {
@@ -52,16 +53,23 @@ export default function Login({ handleLogIn }) {
 
     return(
         <>
-            <div>Login</div>
-            <div>Email</div>
-            <input type='text' name='email' value={formData.email} onChange={handleSetFormData}/>
-            <div>Password</div>
-            <input type='password' name='password' value={formData.password} onChange={handleSetFormData}/>
-            <br />
-            <button onClick={handleLogIn}>Login</button>
-            <Link to='/signup'>
-                <button>Sign up</button>
-            </Link>
+            <Grid container textAlign="center">
+                <Grid item xs={12} m={2}>
+                    <Typography variant="h5">Login</Typography>
+                </Grid>
+                <Grid item xs={12} m={2}>
+                    <TextField type='text' label="Email" name='email' value={formData.email} onChange={handleSetFormData}/>
+                </Grid>
+                <Grid item xs={12} m={2}>
+                    <TextField type='password' label="Password" name='password' value={formData.password} onChange={handleSetFormData}/>
+                </Grid>
+                <Grid item xs={12} m={2}>
+                    <Button variant="contained" onClick={handleLogIn}>Login</Button>
+                    <Link to='/signup' style={{textDecoration: 'none'}}>
+                        <Button>Sign up</Button>
+                    </Link>
+                </Grid>
+            </Grid>
         </>
     )
 }

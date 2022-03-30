@@ -11,10 +11,7 @@ export default function UserSearch({mode}) {
     const users = useSelector(state => state.users)
     const auth = useSelector(state => state.auth)
     const trip = useSelector(state => state.trip)
-    const group = useSelector(state => state.group)
-
-    console.log(users)
-    
+    const group = useSelector(state => state.group)    
 
     // this needs to be reimagined but fine for now
     useEffect(() => {
@@ -36,8 +33,6 @@ export default function UserSearch({mode}) {
         })
     }, [])
     
-
-    console.log(mode)
     return (
         <Autocomplete
             multiple

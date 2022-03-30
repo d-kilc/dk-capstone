@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { Grid, Typography, Button, ButtonGroup, TextField } from '@mui/material'
 import store from '../store'
 export default function Signup({handleSignUp}) {
 
@@ -38,6 +39,10 @@ export default function Signup({handleSignUp}) {
                         payload: data
                     })
                 })
+            } else {
+                res.json().then(data => {
+                    alert(data.errors)
+                })
             }
             // error handling
         })
@@ -45,21 +50,29 @@ export default function Signup({handleSignUp}) {
 
     return (
         <>
-            <div>Sign Up</div>
-            <div>Email</div>
-            <input type='text' name='email' value={formData.email} onChange={handleSetFormData}/>
-            <div>Display name</div>
-            <input type='text' name='name' value={formData.name} onChange={handleSetFormData}/>
-            <div>Password</div>
-            <input type='password' name='password' value={formData.password} onChange={handleSetFormData}/>
-            <br />
-            <div>Confirm password</div>
-            <input type='password' name='password_confirmation' value={formData.password_confirmation} onChange={handleSetFormData}/>
-            <br />
-            <button onClick={() => handleSignUp(formData)}>Sign Up</button>
-            <Link to='/login'>
-                <button>Log In</button>
-            </Link>
+            <Grid container textAlign="center">
+                <Grid item xs={12} m={2}>
+                    <Typography variant="h5">Sign Up</Typography>
+                </Grid>
+                <Grid item xs={12} m={2}>
+                    <TextField type='text' label="Email" name='email' value={formData.email} onChange={handleSetFormData}/>
+                </Grid>
+                <Grid item xs={12} m={2}>
+                    <TextField type='text' label="Username" name='name' value={formData.name} onChange={handleSetFormData}/>
+                </Grid>
+                <Grid item xs={12} m={2}>
+                    <TextField type='password' label="Password" name='password' value={formData.password} onChange={handleSetFormData}/>
+                </Grid>
+                <Grid item xs={12} m={2}>
+                    <TextField type='password' label="Confirm Password" name='password_confirmation' value={formData.password_confirmation} onChange={handleSetFormData}/>
+                </Grid>
+                <Grid item xs={12} m={2}>
+                    <Button variant="contained" onClick={() => handleSignUp(formData)}>Sign Up</Button>
+                    <Link to='/login'>
+                        <Button>Log In</Button>
+                    </Link>
+                </Grid>
+            </Grid>
         </>
     )
 }

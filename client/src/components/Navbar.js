@@ -62,11 +62,11 @@ export default function Navbar() {
     }
   
     return (
-      <AppBar position="static">
+      <AppBar position="sticky">
         <Container maxWidth="none">
           <Toolbar disableGutters>
             <Typography
-              variant="h6"
+              variant="h4"
               noWrap
               component="div"
               sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
@@ -104,12 +104,18 @@ export default function Navbar() {
                       navigate('/')
                       handleDrawerToggle()
                     }}>
-                    <Typography textAlign="center">Dashboard</Typography>
+                    <Typography textAlign="center" variant="h4">Dashboard</Typography>
+                  </MenuItem>
+                  <MenuItem onClick={() => {
+                      navigate('/new-trip')
+                      handleDrawerToggle()
+                    }}>
+                    <Typography textAlign="center" variant="h4">New trip</Typography>
                   </MenuItem>
               </Drawer>
             </Box>
             <Typography
-              variant="h6"
+              variant="h4"
               noWrap
               component="div"
               sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
@@ -122,13 +128,21 @@ export default function Navbar() {
                     }}>
                     <Typography textAlign="center">Dashboard</Typography>
                   </MenuItem>
+                  <MenuItem onClick={() => {
+                      navigate('/new-trip')
+                    }}>
+                    <Typography textAlign="center">New trip</Typography>
+                  </MenuItem>
             </Box>
   
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 { auth.user
+                    // ? <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    //     <Avatar alt={auth.user.email} src="/static/images/avatar/2.jpg" />
+                    // </IconButton>
                     ? <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                        <Avatar alt={auth.user.email} src="/static/images/avatar/2.jpg" />
+                      <Typography>{auth.user.name}</Typography>
                     </IconButton>
                     : <></>
                 }
@@ -149,11 +163,11 @@ export default function Navbar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                  <Link to="/profile" className="unstyled-link">
+                  {/* <Link to="/profile" className="unstyled-link">
                     <MenuItem>
                         <Typography textAlign="center">Profile</Typography>
                     </MenuItem>
-                  </Link>
+                  </Link> */}
                   <MenuItem onClick={handleLogOut}>
                     <Typography textAlign="center">Sign out</Typography>
                   </MenuItem>
