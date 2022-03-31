@@ -63,7 +63,7 @@ export default function Navbar() {
   
     return (
       <AppBar position="sticky">
-        <Container maxWidth="none">
+        <Container maxWidth="none" sx={{ backgroundColor: '#6DECAF'}}>
           <Toolbar disableGutters>
             <Typography
               variant="h4"
@@ -104,13 +104,13 @@ export default function Navbar() {
                       navigate('/')
                       handleDrawerToggle()
                     }}>
-                    <Typography textAlign="center" variant="h4">Dashboard</Typography>
+                    <Typography textAlign="center" m={4} variant="h4">Dashboard</Typography>
                   </MenuItem>
                   <MenuItem onClick={() => {
                       navigate('/new-trip')
                       handleDrawerToggle()
                     }}>
-                    <Typography textAlign="center" variant="h4">New trip</Typography>
+                    <Typography textAlign="center"  m={4} variant="h4">New trip</Typography>
                   </MenuItem>
               </Drawer>
             </Box>

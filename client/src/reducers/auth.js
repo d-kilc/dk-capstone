@@ -24,6 +24,17 @@ export default function authReducer(state = { user: null, loggedIn: false}, acti
                 ...state,
                 ...payload
             }
+        case 'ADD_NEW_TRIP':
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    user_trips: [
+                        ...state.user.user_trips,
+                        {...payload}
+                    ]
+                }
+            }
         case 'DELETE_TRIP':
             // payload.id
             const deleteIdx = state.user.user_trips.findIndex(userTrip => {
@@ -82,12 +93,26 @@ export default function authReducer(state = { user: null, loggedIn: false}, acti
                     user_groups: [...newUserGroups]
                 }
             }
-        case 'UPDATE_GROUPS':
+        case 'DELETE_GROUP':
+            // payload.id
             const deleteGroupIdx = state.user.user_groups.findIndex(userGroup => {
                 return userGroup.group.id === payload.id
             })
+            const userGroupsCopy = [...state.user.user_groups]
+            userGroupsCopy.splice(deleteGroupIdx, 1)
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    user_groups: [...userGroupsCopy],
+                }
+            }
+        case 'UPDATE_GROUPS':
+            const updateGroupIdx = state.user.user_groups.findIndex(userGroup => {
+                return userGroup.group.id === payload.id
+            })
             const groupCopy = [...state.user.user_groups]
-            groupCopy[deleteGroupIdx].group.name = payload.name
+            groupCopy[updateGroupIdx].group.name = payload.name
             return {
                 ...state,
                 user: {

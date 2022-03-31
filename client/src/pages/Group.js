@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import InviteFriends from '../components/InviteFriends'
 import EditGroup from '../components/EditGroup'
 import LeaveGroup from '../components/LeaveGroup'
+import DeleteGroup from '../components/DeleteGroup'
 import GroupUserTable from '../components/GroupUserTable'
 
 export default function Group() {
@@ -93,6 +94,10 @@ console.log('group.currentGroup: ', group.currentGroup)
                             <Grid item>
                                 <Link onClick={() => setModalVisible({visible: true, action: 'LEAVE'})}>Leave group</Link>
                             </Grid>
+                            <Grid item mx={1}>·</Grid>
+                            <Grid item>
+                                <Link onClick={() => setModalVisible({visible: true, action: 'DELETE'})}>Delete group</Link>
+                            </Grid>
 
                         </Grid>
                     </Grid>
@@ -150,6 +155,23 @@ console.log('group.currentGroup: ', group.currentGroup)
                         transform: 'translate(-50%, -50%)',
                     }}>
                         <LeaveGroup handleToggleModal={setModalVisible} />
+                    </Box>
+                </Modal>
+            ) : (
+                <></>
+            )} 
+
+            {modalVisible.action === 'DELETE' ? (
+                <Modal disableAutoFocus={true} open={true} onClose={() => setModalVisible({visible: false, action: ''})}>
+                    <Box sx={{
+                        borderRadius: '10px',
+                        backgroundColor: 'white',
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                    }}>
+                        <DeleteGroup handleToggleModal={setModalVisible} />
                     </Box>
                 </Modal>
             ) : (

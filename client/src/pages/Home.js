@@ -9,6 +9,7 @@ import store from '../store'
 export default function Home() {
     
     const auth = useSelector(state => state.auth)
+    console.log(auth)
     const navigate = useNavigate()
 
     useEffect(() => {

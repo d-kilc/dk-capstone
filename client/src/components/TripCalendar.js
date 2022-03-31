@@ -127,7 +127,7 @@ export default function TripCalendar() {
                     borderRadius: '10px',
                     backgroundColor: 'white',
                     width: '70%',
-                    height: '70%',
+                    // height: '70%',
                     position: 'absolute',
                     top: '50%',
                     left: '50%',

@@ -9,8 +9,7 @@ Rails.application.routes.draw do
   get '/groups/:id', to: 'groups#show'
   post '/groups', to: 'groups#create'
   patch '/groups/:id', to: 'groups#update'
-  # TO DO
-  # delete '/groups/:id', to: 'groups#destroy'
+  delete '/groups/:id', to: 'groups#destroy'
 
   post '/trips', to: 'trips#create'
   get '/trips/:id', to: 'trips#show'

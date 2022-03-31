@@ -11,12 +11,6 @@ import Amadeus from 'amadeus'
 
 export default function ManageSegment({ handleToggleModal, segment, until }) {
 
-    const auth = useSelector(state => state.auth)
-    const trip = useSelector(state => state.trip)
-    const navigate = useNavigate()
-
-    console.log(segment)
-
     return (
         <Grid container justifyContent='space-around'>
             <Grid item xs={12} m={2}>

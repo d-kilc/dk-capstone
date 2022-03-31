@@ -184,6 +184,8 @@ export default function Trip() {
                         width: {
                             xs: '90%',
                             md: '900px',
+                            lg: '1200px',
+                            xl: '1500px'
                         },
                         top: '50%',
                         left: '50%',

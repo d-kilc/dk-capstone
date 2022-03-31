@@ -52,15 +52,16 @@ export default function DataTable({data, mode}) {
     <>
     <Box sx={{
       height: {
-        xs: '350px',
+        xs: '500px',
         // md: '570px',
       },
       width: {
           xs: '100%',
       },
       overflow: 'scroll',
-      }}>
-      {/* <TableContainer component={Paper}> */}
+      border: '1px solid lightgray',
+      borderRadius: '10px'
+    }}>
         <Table stickyHeader>
           <TableHead>
             <TableRow>
@@ -72,7 +73,6 @@ export default function DataTable({data, mode}) {
             {rows}
           </TableBody>
         </Table>
-      {/* </TableContainer> */}
     </Box>
     </>
   )

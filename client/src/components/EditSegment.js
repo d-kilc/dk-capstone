@@ -8,16 +8,15 @@ import { useState } from 'react'
 export default function EditSegment({thisSegment, id, handleToggleModal}) {
 
     const [segmentInfo, setSegmentInfo] = useState({from: '', to: '', how: ''})
-    console.log('thisSegment: ', thisSegment)
+    // console.log('thisSegment: ', thisSegment)
 
-    const [modalVisible, setModalVisible] = useState({visible: false, action: ''}) 
+    // const [modalVisible, setModalVisible] = useState({visible: false, action: ''}) 
     const [formData, setFormData] = useState({
         from: '',
         to: '',
         when: '',
         how: '',
     })
-    console.log('formData: ', formData)
 
     function handleUpdateFormData(e) {
         setFormData({...formData, [e.target.name]: e.target.value})

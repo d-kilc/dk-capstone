@@ -33,9 +33,7 @@ class TripsController < ApplicationController
         else
             user_trip = UserTrip.create! user_id: params[:user_id], trip_id: trip.id, role: 'creator'
         end
-
-
-        render json: trip, status: 201, serializer: TripDetailSerializer
+        render json: trip, status: 201
 
     end
     

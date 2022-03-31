@@ -29,7 +29,16 @@ export default function SaveTrip({handleToggleModal}) {
                 res.json().then(data => {
                     handleToggleModal({visible: false, action: ''})
                     navigate('/')
+                    console.log('auth.user: ', auth.user)
+                    console.log('data: ', data)
                     store.dispatch({ type: 'RESET_NEW_TRIP' })
+
+                    const userTrip = data.user_trips.find(uT => uT.user.id === auth.user.id)
+                    console.log('user trip to add to state: ', userTrip)
+                    store.dispatch({
+                        type: 'ADD_NEW_TRIP',
+                        payload: userTrip
+                    })
                 })
             } else {
                 res.json().then(data => {

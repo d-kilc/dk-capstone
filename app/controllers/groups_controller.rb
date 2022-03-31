@@ -1,8 +1,7 @@
 class GroupsController < ApplicationController
 
     def show
-        group_id = params[:id]
-        group = Group.find group_id
+        group = find_group
         render json: group, status: 200, serializer: GroupDetailSerializer
     end
 
@@ -13,16 +12,26 @@ class GroupsController < ApplicationController
     end
 
     def update
-        group_id = params[:id]
-        group = Group.find group_id
+        group = find_group
         group.update! group_params
         render json: group, status: 200
+    end
+
+    def destroy
+        group = find_group
+        group.destroy!
+        render json: {}, status: 200
     end
 
     private
 
     def group_params
         params.permit :name
+    end
+
+    def find_group
+        group_id = params[:id]
+        group = Group.find group_id
     end
 
 end

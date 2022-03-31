@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
+import Box from '@mui/material/Box';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import UserBadge from './UserBadge'
@@ -34,7 +34,7 @@ export default function GroupUserTable({ data, isGroupCreator }) {
   })
   
   return (
-    <TableContainer component={Paper}>
+    <Box sx={{ border: '1px solid lightgray', borderRadius: '10px' }}>
       <Table  aria-label="simple table">
         <TableHead>
             <TableRow>
@@ -52,6 +52,6 @@ export default function GroupUserTable({ data, isGroupCreator }) {
           {rows}
         </TableBody>
       </Table>
-    </TableContainer>
+    </Box>
   )
 }
