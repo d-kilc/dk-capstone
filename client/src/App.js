@@ -1,6 +1,6 @@
 import './App.css'
 
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { Routes, Route, useNavigate } from 'react-router-dom'
 
 import Navbar from './components/Navbar'
@@ -21,19 +21,22 @@ import {Wrapper, Status} from '@googlemaps/react-wrapper'
 export default function App() {
 
   const auth = useSelector(state => state.auth)
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetch('/me')
     .then(res => {
-      if (res.ok) {
+      if (res.ok) { 
         res.json().then(data => {
+          if (!data.user) navigate('/login')
           store.dispatch({
             type:'REFRESH',
             payload: {user: data, loggedIn: true}
           })
         })
       } else {
-        res.json().then(data => {
+        navigate('/login')
+        res.json().then(() => {
           store.dispatch({
             type: 'REFRESH',
             payload: {user: null, loggedIn: false}
@@ -43,10 +46,10 @@ export default function App() {
     })
   }, [])
 
-  function render(status) {
-    return <h1>{status}</h1>
+  function render() {
+    return <></>
   }
-  console.log(window)
+  
   return (
     <Wrapper libraries={['places']} apiKey={google} render={render}>
       <ThemeProvider theme={theme}>
@@ -59,7 +62,6 @@ export default function App() {
           <Route path='/profile' element={<Profile />}/>
           <Route path='/trips/:trip_id' element={<Trip />}/>
           <Route path='/groups/:group_id' element={<Group user={auth.user}/>}/>
-          {/* <Route exact path='/' element={<Home user={user} />}/> */}
           <Route exact path='/' element={<Home />}/>
         </Routes>
         

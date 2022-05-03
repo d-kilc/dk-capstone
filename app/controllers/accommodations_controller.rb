@@ -2,10 +2,10 @@ class AccommodationsController < ApplicationController
 
     def search
         api = AmadeusApi.new
-        # result = api.amadeus.reference_data.locations.get({ keyword: params[:keyword], subType: Amadeus::Location::ANY })
+        
         location = api.amadeus.reference_data.locations.get({ keyword: params[:keyword], subType: 'CITY'})
         location_id = location.result['data'].first['id'][1..3]
-        puts location_id
+        
         hotel = api.amadeus.shopping.hotel_offers.get({
             cityCode: location_id,
             checkInDate: params[:when],

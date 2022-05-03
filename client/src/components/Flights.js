@@ -23,17 +23,11 @@ export default function Flights({segment}) {
                 setLoading(false)
             }
         })
-        // .then(res => res.json())
-        // .then(data => {
-        //     setFlightOptions(data)
-        // })
     }, [])
 
     function formatCity(string) {
         // truncates on space (less than ideal)
         let formattedString = string.substring(0, string.indexOf(' ') - 1).replace(/\s/g, '').toLowerCase()
-        // let formattedString = string.substring(0, string.indexOf(',')).replace(/\s/g, '-').toLowerCase()
-        // let formattedString = string.replaceAll(', ', '-').toLowerCase()
         return formattedString
     }
 

@@ -11,7 +11,7 @@ import {
   TableRow,
   Paper,
   Modal,
-  Box
+  Box,
 } from '@mui/material'
 import LeaveGroup from './LeaveGroup'
 import LeaveTrip from './LeaveTrip'
@@ -65,8 +65,8 @@ export default function DataTable({data, mode}) {
         <Table stickyHeader>
           <TableHead>
             <TableRow>
-                <TableCell sx={{width: { xs: '80%', md: '80%' }}}>Name</TableCell>
-                <TableCell align="left">Actions</TableCell>
+              <TableCell sx={{width: { xs: '80%', md: '80%' }}}>Name</TableCell>
+              <TableCell align="left">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

@@ -2,7 +2,6 @@ export default function tripReducer(state = {
     events: [],
     currentEvent: {},
     newEvent: {},
-    // currentTrip: {}
 }, action) {
     const { type, payload } = action
     switch (type) {

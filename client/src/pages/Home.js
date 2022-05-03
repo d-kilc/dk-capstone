@@ -1,27 +1,19 @@
-import { Routes, Route, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import DataTable from '../components/DataTable'
 import NewGroup from '../components/NewGroup'
-import { Typography, Grid, Card, Link, Button, Modal, Box } from '@mui/material'
-import store from '../store'
+import { Typography, Grid, Link, Button, Modal, Box } from '@mui/material'
+// import store from '../store'
 
 export default function Home() {
     
     const auth = useSelector(state => state.auth)
-    console.log(auth)
     const navigate = useNavigate()
-
-    useEffect(() => {
-        if (!auth.loggedIn) {
-            navigate('/login')
-        }
-    }, [auth])
-
     const [modalVisible, setModalVisible] = useState({visible: false, action: ''})
 
-    if (!auth.loggedIn) return null
-    
+    if (!auth.loggedIn) navigate('/login')
+
     return (
         <div className="container">
             <Grid container spacing={5}>
@@ -30,12 +22,12 @@ export default function Home() {
                     <Button width={'20px'} onClick={() => navigate('/new-trip')}>Go</Button>
                 </Grid>
                 <Grid item xs={12} md={6}>
-                    <Typography variant="h6" m={1}>My upcoming trips</Typography>
+                    <Typography variant="h5" m={1}>My upcoming trips</Typography>
                     <DataTable data={auth.user.user_trips} mode="TRIPS"/>
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                        <Typography variant="h6" m={1}>My groups</Typography>
+                        <Typography variant="h5" m={1}>My groups</Typography>
                         <Link onClick={() => setModalVisible({visible: true, action: 'NEW_GROUP'})}>New group</Link>
                     </div>
                     <DataTable data={auth.user.user_groups} mode="GROUPS"/>

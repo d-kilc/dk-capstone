@@ -19,8 +19,6 @@ import { useEffect } from 'react'
 
 import store from '../store'
 
-const pages = ['Products', 'Pricing', 'Blog']
-
 export default function Navbar() {
 
     const auth = useSelector(state => state.auth)
@@ -50,13 +48,14 @@ export default function Navbar() {
         fetch('/logout', { method: 'DELETE' })
         .then(res => {
             if (res.ok) {
-                res.json().then(data => {
-                    store.dispatch({
-                        type: 'LOG_OUT',
-                    })
-                    handleCloseUserMenu()
-                    handleCloseNavMenu()
-                })
+              navigate('/login')
+              res.json().then(() => {
+                  store.dispatch({
+                      type: 'LOG_OUT',
+                  })
+                  handleCloseUserMenu()
+                  handleCloseNavMenu()
+              })
             }
         })
     }
@@ -138,9 +137,6 @@ export default function Navbar() {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 { auth.user
-                    // ? <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    //     <Avatar alt={auth.user.email} src="/static/images/avatar/2.jpg" />
-                    // </IconButton>
                     ? <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                       <Typography>{auth.user.name}</Typography>
                     </IconButton>
@@ -163,11 +159,6 @@ export default function Navbar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                  {/* <Link to="/profile" className="unstyled-link">
-                    <MenuItem>
-                        <Typography textAlign="center">Profile</Typography>
-                    </MenuItem>
-                  </Link> */}
                   <MenuItem onClick={handleLogOut}>
                     <Typography textAlign="center">Sign out</Typography>
                   </MenuItem>

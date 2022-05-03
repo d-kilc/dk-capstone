@@ -8,12 +8,10 @@ class FlightsController < ApplicationController
         to = params[:to]
         to = to.gsub('-',' ')
         
-        # byebug
         
         from_result = api.amadeus.reference_data.locations.get({ keyword: from, subType: 'CITY'})
         to_result = api.amadeus.reference_data.locations.get({ keyword: to, subType: 'CITY'})
         
-        # byebug
 
         from_id = from_result.data.first['id'][1..3]
         to_id = to_result.data.first['id'][1..3]
