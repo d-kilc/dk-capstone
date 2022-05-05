@@ -21,7 +21,7 @@ export default function DataTable({data, mode}) {
   const [modalVisible, setModalVisible] = React.useState({visible: true, action: ''})
   const navigate = useNavigate()
 
-  const rows = data.map(object => {
+  const rows = data && data.map(object => {
       if (object.hasOwnProperty('group')) {
         return (
           <>

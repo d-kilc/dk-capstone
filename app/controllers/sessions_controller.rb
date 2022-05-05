@@ -13,7 +13,8 @@ class SessionsController < ApplicationController
 
     def destroy
         session.delete :user_id
-        render json: {email: 'Unauthorized'}, status: 200
+        # render json: {email: 'Unauthorized'}, status: 200
+        render json: nil, status: 200
     end
 
 end

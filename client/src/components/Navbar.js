@@ -48,11 +48,12 @@ export default function Navbar() {
         fetch('/logout', { method: 'DELETE' })
         .then(res => {
             if (res.ok) {
-              navigate('/login')
+              console.log('handleLogOut res is ok')
               res.json().then(() => {
                   store.dispatch({
                       type: 'LOG_OUT',
                   })
+                  navigate('/login')
                   handleCloseUserMenu()
                   handleCloseNavMenu()
               })
@@ -159,6 +160,9 @@ export default function Navbar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
+                  <MenuItem onClick={() => navigate('/profile')}>
+                    <Typography textAlign="center">Profile</Typography>
+                  </MenuItem>
                   <MenuItem onClick={handleLogOut}>
                     <Typography textAlign="center">Sign out</Typography>
                   </MenuItem>

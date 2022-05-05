@@ -59,7 +59,6 @@ export default function Group() {
             }
         })
     }, [])
-console.log('group.currentGroup: ', group.currentGroup)
 
     const groupUsers = group.currentGroup && group.currentGroup.user_groups.map(userGroup => userGroup.user)
 

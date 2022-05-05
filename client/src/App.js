@@ -24,11 +24,14 @@ export default function App() {
   const navigate = useNavigate()
 
   useEffect(() => {
+    console.log('useEffect triggered!')
     fetch('/me')
     .then(res => {
       if (res.ok) { 
         res.json().then(data => {
-          if (!data.user) navigate('/login')
+          console.log('data: ', data)
+          // if (!data.user) navigate('/login')
+          if (!data.email) navigate('/login')
           store.dispatch({
             type:'REFRESH',
             payload: {user: data, loggedIn: true}
