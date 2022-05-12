@@ -24,6 +24,15 @@ export default function authReducer(state = { user: null, loggedIn: false }, act
                 ...state,
                 ...payload
             }
+        case 'UPDATE_USER':
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    name: payload.name,
+                    email: payload.email
+                }
+            }
         case 'ADD_NEW_TRIP':
             return {
                 ...state,
@@ -36,7 +45,6 @@ export default function authReducer(state = { user: null, loggedIn: false }, act
                 }
             }
         case 'DELETE_TRIP':
-            // payload.id
             const deleteIdx = state.user.user_trips.findIndex(userTrip => {
                 return userTrip.trip.id === payload.id
             })

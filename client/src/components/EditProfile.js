@@ -5,12 +5,42 @@ import store from '../store'
 
 export default function EditProfile({ handleToggleModal }) {
 
-    // const group = useSelector(state => state.group)
-    // const [newName, setNewName] = useState(group.currentGroup.name)
+    const auth = useSelector(state => state.auth)
+    console.log(auth)
+    const [userData, setUserData] = useState({
+        name: auth.user.name,
+        email: auth.user.email,
+    })
 
-    // function handleUpdateGroup(e) {
-    //     setNewName(e.target.value)
-    // }
+    function handleUpdateUserData(e) {
+        setUserData({ ...userData, [e.target.name]: e.target.value })
+    }
+
+    function handleSaveUpdatedUser() {
+        fetch(`/users/${auth.user.id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify(userData)
+        })
+        .then(res => {
+            if (res.ok) {
+                res.json().then(data => {
+                    store.dispatch({
+                        type: 'UPDATE_USER',
+                        payload: {
+                            name: userData.name,
+                            email: userData.email,
+                        }
+                    })
+                    handleToggleModal({ visible: false, action: '' })
+                })
+            } else {
+                res.json().then(data => {
+                    alert(data.errors)
+                })
+            }
+        })
+    }
 
     // function handleSaveUpdatedGroup(group) {
     //     fetch(`/groups/${group.id}`, {
@@ -48,11 +78,15 @@ export default function EditProfile({ handleToggleModal }) {
                 <Typography variant="h5">Edit profile</Typography>
             </Grid>
             <Grid item xs={12} m={2} >
-                {/* <TextField fullWidth value={newName} label="name" name="name" onChange={handleUpdateGroup}/> */}
+                <TextField fullWidth value={userData.name} label="screen name" name="name" onChange={handleUpdateUserData}/>
+            </Grid>
+            <Grid item xs={12} m={2} >
+                <TextField fullWidth value={userData.email} label="email" name="email" onChange={handleUpdateUserData}/>
             </Grid>
             <Grid item xs={12} m={2} >
                 <ButtonGroup>
-                    <Button variant="contained" color="success">Save</Button>
+                    <Button variant="contained">Change Password</Button>
+                    <Button variant="contained" color="success" onClick={() => handleSaveUpdatedUser()}>Save</Button>
                     <Button variant="contained" color="error" onClick={() => handleToggleModal({visible: false, action: ''})}>Cancel</Button>
                 </ButtonGroup>
             </Grid>

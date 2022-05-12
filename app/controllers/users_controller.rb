@@ -17,4 +17,16 @@ class UsersController < ApplicationController
         render json: user, status: 200
     end
 
+    def update
+        user = User.find session[:user_id]
+        user.update! user_params
+        render json: user, status: 200
+    end
+
+    private
+
+    def user_params
+        params.permit :name, :email
+    end
+
 end

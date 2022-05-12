@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   resources :trips, only: [:show] do
     resources :events, only: [:index]
   end
+  
   post '/events', to: 'events#create'
   delete '/events/:id', to: 'events#destroy'
   patch '/events/:id', to: 'events#update'
