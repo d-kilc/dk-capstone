@@ -6,6 +6,7 @@ import { Routes, Route, useNavigate } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import Profile from './pages/Profile'
+import PasswordReset from './pages/PasswordReset'
 import NewTrip from './pages/NewTrip'
 import Trip from './pages/Trip'
 import Group from './pages/Group'
@@ -60,6 +61,7 @@ export default function App() {
         <Navbar />
         <Routes>
           <Route path='/login' element={<Login />}/>
+          <Route path='/passwordreset' element={<PasswordReset />}/>
           <Route path='/signup' element={<Signup />}/>
           <Route path='/new-trip' element={<NewTrip />}/>
           <Route path='/profile' element={<Profile />}/>

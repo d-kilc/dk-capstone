@@ -32,6 +32,7 @@ export default function Profile() {
                             <Box ml='15px' my='auto'>
                                 <Typography my='auto' variant="h3">{auth.user && auth.user.name}</Typography>
                                 <Link onClick={() => setModalVisible({visible: true, action: 'EDIT'})}>Edit profile</Link>
+                                <Link href='/passwordreset' sx={{ ml: '10px' }}>Reset password</Link>
                             </Box>
                         </Box>
                         <Typography variant='h5' my={2}>User information</Typography>
